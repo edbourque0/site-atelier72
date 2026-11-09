@@ -51,6 +51,7 @@
 
 <header-drawer
   class="header-drawer {{ class }}"
+  data-hide-empty-collections="{{ settings.menu_hide_empty_collections }}"
   style="--menu-image-border-radius: {{ image_border_radius }}px; --resource-card-corner-radius: {{ image_border_radius }}px;{% if block_settings.drawer_divider_color != blank %} --drawer-divider-color: {{ block_settings.drawer_divider_color }};{% endif %}"
 >
   <details
@@ -112,6 +113,7 @@
             {%- for link in linklist.links -%}
               {% assign animation_index = animation_index | plus: 1 %}
               <li
+                data-collection-count="{{ link.object.products_count }}"
                 style="--menu-drawer-animation-index: {{ animation_index }};"
                 class="{%- if block_settings.drawer_accordion -%}menu-drawer__list-item--deep{%- else -%}menu-drawer__list-item--flat{%- endif -%}{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
               >
@@ -157,6 +159,7 @@
                       >
                         {%- for childlink in link.links -%}
                           <li
+                            data-collection-count="{{ childlink.object.products_count }}"
                             class="menu-drawer__list-item"
                             style="--menu-drawer-animation-index: {{ forloop.index }};"
                           >
@@ -218,6 +221,7 @@
                   >
                     {%- for childlink in link.links -%}
                       <li
+                        data-collection-count="{{ childlink.object.products_count }}"
                         class="menu-drawer__list-item"
                         style="--menu-drawer-animation-index: {{ animation_index }};"
                       >
@@ -265,6 +269,7 @@
             {%- for link in linklist.links -%}
               {% assign animation_index = animation_index | plus: 1 %}
               <li
+                data-collection-count="{{ link.object.products_count }}"
                 class="menu-drawer__list-item"
                 style="--menu-drawer-animation-index: {{ animation_index }};"
               >
@@ -342,6 +347,7 @@
                           {% assign first_accordion_open = false -%}
                           {%- for childlink in link.links -%}
                             <li
+                              data-collection-count="{{ childlink.object.products_count }}"
                               class="
                                 menu-drawer__list-item
                                 {% if childlink.links != blank -%}
@@ -419,6 +425,7 @@
                                       >
                                         {%- for grandchildlink in childlink.links -%}
                                           <li
+                                            data-collection-count="{{ grandchildlink.object.products_count }}"
                                             class="menu-drawer__list-item"
                                             style="--menu-drawer-animation-index: {{ forloop.index }};"
                                           >
@@ -484,6 +491,7 @@
                                   >
                                     {%- for grandchildlink in childlink.links -%}
                                       <li
+                                        data-collection-count="{{ grandchildlink.object.products_count }}"
                                         class="menu-drawer__list-item"
                                         style="--menu-drawer-animation-index: {{ forloop.index }};"
                                       >
@@ -785,6 +793,11 @@
 </header-drawer>
 
 {% stylesheet %}
+  /* Links to collections with no products in the online store (theme setting). */
+  [data-hide-empty-collections='true'] li[data-collection-count='0'] {
+    display: none;
+  }
+
   .icon-caret--forward svg {
     transform: rotate(-90deg);
   }

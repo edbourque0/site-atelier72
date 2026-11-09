@@ -15,6 +15,15 @@
   {% render 'mega-menu-list', parent_link: link, id: 'MegaMenuList-1', grid_columns_count: 6, menu_content_type: 'featured_products' %}
 {%- enddoc -%}
 
+{%- liquid
+  # Menu links to collections with no products published to the online store are skipped when the
+  # theme setting is on. -1 never matches a product count, so nothing is skipped when it is off.
+  assign empty_collection_count = -1
+  if settings.menu_hide_empty_collections
+    assign empty_collection_count = 0
+  endif
+-%}
+
 {% liquid
   comment
     open_column_span tracks when a vertical column in the mega menu is open. Links will be stacked
@@ -77,6 +86,7 @@
   style="--menu-image-border-radius: {{ image_border_radius }}px;"
 >
   {% for link in parent_link.links %}
+    {%- if link.object.products_count == empty_collection_count -%}{%- continue -%}{%- endif -%}
     {% liquid
       # Decide whether to open a column span, and how many columns of the grid to span
       if forloop.first or open_column_span == false
@@ -143,6 +153,7 @@
           {% endif %}
         >
           {% for childLink in link.links %}
+            {%- if childLink.object.products_count == empty_collection_count -%}{%- continue -%}{%- endif -%}
             {% assign break_after_modulo = forloop.index | modulo: links_before_wrap %}
             <li
               {% if break_after_modulo == 0 and should_break_columns %}
