@@ -1,5 +1,7 @@
 {
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "account": "खाते",
     "active_filters": "सक्रिय फिल्टर्स:",
     "cart": "कार्ट",

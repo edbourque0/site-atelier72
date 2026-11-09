@@ -20,6 +20,8 @@
     "slider_label": "แถบเลื่อน"
   },
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "play_model": "เล่นโมเดล 3 มิติ",
     "play_video": "เล่นวิดีโอ",
     "unit_price": "ราคาต่อหน่วย",

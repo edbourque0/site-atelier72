@@ -1,5 +1,7 @@
 {
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "account": "Обліковий запис",
     "active_filters": "Активні фільтри:",
     "cart": "Кошик",

@@ -1,0 +1,387 @@
+{% comment %}
+  Section contract.
+  Full-screen brand video hero: a muted, looping background video (or image) under a dark gradient,
+  with an eyebrow, a display heading, two pill buttons and pause / sound controls in the bottom bar.
+  Designed as the first section under a transparent header.
+  @example
+  <!-- Home page, first section. Upload an MP4 in the Video setting and a poster image as fallback -->
+{% endcomment %}
+
+{% render 'editorial-styles' %}
+
+{%- liquid
+  assign video = section.settings.video
+  assign image = section.settings.image
+  assign has_video = false
+  if video != blank
+    assign has_video = true
+  endif
+-%}
+
+{%- if has_video -%}
+  <script src="{{ 'brand-hero.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{%- endif -%}
+
+<brand-hero
+  class="brand-hero brand-hero--{{ section.settings.height }}"
+  style="--brand-hero-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
+  data-label-pause="{{ 'accessibility.pause_video' | t | escape }}"
+  data-label-play="{{ 'accessibility.play_video' | t | escape }}"
+  data-label-mute="{{ 'accessibility.mute_video' | t | escape }}"
+  data-label-unmute="{{ 'accessibility.unmute_video' | t | escape }}"
+>
+  <div class="brand-hero__media">
+    {%- if has_video -%}
+      {{
+        video
+        | video_tag:
+          autoplay: true,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          controls: false,
+          preload: 'metadata',
+          image_size: '1920x',
+          class: 'brand-hero__video'
+      }}
+    {%- elsif image != blank -%}
+      {{
+        image
+        | image_url: width: 3000
+        | image_tag:
+          widths: '750, 1100, 1500, 1920, 2400, 3000',
+          sizes: '100vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          class: 'brand-hero__image'
+      }}
+    {%- else -%}
+      {{ 'hero-apparel-1' | placeholder_svg_tag: 'brand-hero__image brand-hero__placeholder' }}
+    {%- endif -%}
+    <span class="brand-hero__shade" aria-hidden="true"></span>
+  </div>
+
+  <div class="brand-hero__bar">
+    <div class="brand-hero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="editorial-eyebrow brand-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="brand-hero__heading">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank or section.settings.secondary_label != blank -%}
+        <div class="brand-hero__actions">
+          {% render 'editorial-button',
+            label: section.settings.button_label,
+            link: section.settings.button_link,
+            style: 'light'
+          %}
+          {% render 'editorial-button',
+            label: section.settings.secondary_label,
+            link: section.settings.secondary_link,
+            style: 'outline',
+            show_arrow: false
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if has_video -%}
+      <div class="brand-hero__controls">
+        {%- if section.settings.caption != blank -%}
+          <span class="brand-hero__caption">{{ section.settings.caption | escape }}</span>
+        {%- endif -%}
+        <button
+          type="button"
+          class="brand-hero__control"
+          ref="playToggle"
+          on:click="/togglePlay"
+          aria-label="{{ 'accessibility.pause_video' | t | escape }}"
+        >
+          <svg class="brand-hero__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+          <svg class="brand-hero__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        {%- if section.settings.show_sound_toggle -%}
+          <button
+            type="button"
+            class="brand-hero__control"
+            ref="soundToggle"
+            on:click="/toggleSound"
+            aria-label="{{ 'accessibility.unmute_video' | t | escape }}"
+          >
+            <svg class="brand-hero__icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l4 6M21 9l-4 6"/></svg>
+            <svg class="brand-hero__icon-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+          </button>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</brand-hero>
+
+{% stylesheet %}
+  .brand-hero {
+    position: relative;
+    display: grid;
+    align-items: end;
+    overflow: hidden;
+    color: var(--palette-lightest);
+    background-color: var(--color-primary-button-background);
+  }
+
+  .brand-hero--full {
+    min-height: 100svh;
+  }
+
+  .brand-hero--large {
+    min-height: 80svh;
+  }
+
+  .brand-hero--medium {
+    min-height: 65svh;
+  }
+
+  .brand-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .brand-hero__media :is(video, img, svg) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .brand-hero__placeholder {
+    fill: rgb(var(--palette-lightest-rgb) / var(--opacity-20));
+  }
+
+  .brand-hero__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgb(10 24 16 / calc(var(--brand-hero-overlay) * 0.8)) 0%,
+      rgb(10 24 16 / 0) 24%,
+      rgb(10 24 16 / 0) 45%,
+      rgb(10 24 16 / var(--brand-hero-overlay)) 100%
+    );
+  }
+
+  .brand-hero__bar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    inline-size: 100%;
+    max-inline-size: var(--page-width, 90rem);
+    margin-inline: auto;
+    padding-inline: var(--page-margin, 1.25rem);
+    padding-block: calc(var(--header-height, 5rem) + 2rem) clamp(2rem, 5vw, 3.25rem);
+    box-sizing: border-box;
+  }
+
+  .brand-hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.625rem;
+    max-inline-size: 47.5rem;
+    min-width: 0;
+  }
+
+  .brand-hero__eyebrow {
+    --editorial-accent: #c9b48a;
+  }
+
+  .brand-hero__heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(3.25rem, 7vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    color: inherit;
+    text-wrap: balance;
+  }
+
+  .brand-hero__heading em {
+    font-style: normal;
+  }
+
+  .brand-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .brand-hero .button.editorial-button--outline {
+    --color-foreground: var(--palette-lightest);
+    --color-background: var(--palette-darkest);
+  }
+
+  .brand-hero__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+  }
+
+  .brand-hero__caption {
+    font-size: 0.6875rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(var(--palette-lightest-rgb) / var(--opacity-80));
+  }
+
+  .brand-hero__control {
+    display: grid;
+    place-items: center;
+    inline-size: 3rem;
+    block-size: 3rem;
+    padding: 0;
+    border: 1px solid rgb(var(--palette-lightest-rgb) / var(--opacity-60));
+    border-radius: 50%;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .brand-hero__control:hover {
+    background-color: rgb(var(--palette-lightest-rgb) / var(--opacity-15));
+  }
+
+  .brand-hero__control svg {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+  }
+
+  .brand-hero__icon-play,
+  .brand-hero__icon-sound,
+  brand-hero[data-paused] .brand-hero__icon-pause,
+  brand-hero[data-sound] .brand-hero__icon-muted {
+    display: none;
+  }
+
+  brand-hero[data-paused] .brand-hero__icon-play,
+  brand-hero[data-sound] .brand-hero__icon-sound {
+    display: block;
+  }
+
+  @media (max-width: 749px) {
+    .brand-hero__caption {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.brand_hero",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image",
+      "info": "t:info.brand_hero_image"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:settings.height",
+      "options": [
+        {
+          "value": "full",
+          "label": "t:options.full_screen"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "t:settings.overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "t:content.text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:settings.eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.brand_hero_heading"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.primary_button_label",
+      "default": "t:text_defaults.brand_hero_button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:settings.primary_button_link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "t:settings.secondary_button_label"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "t:settings.secondary_button_link"
+    },
+    {
+      "type": "header",
+      "content": "t:content.video_controls"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "t:settings.caption"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sound_toggle",
+      "label": "t:settings.show_sound_toggle",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.brand_hero",
+      "category": "t:categories.banners"
+    }
+  ]
+}
+{% endschema %}

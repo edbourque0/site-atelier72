@@ -1,5 +1,7 @@
 {
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "account": "એકાઉન્ટ",
     "active_filters": "સક્રિય ફિલ્ટર્સ:",
     "cart": "કાર્ટ",

@@ -20,6 +20,8 @@
     "slider_label": "Carrusel"
   },
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "play_model": "Reproducir el modelo 3D",
     "play_video": "Reproducir el video",
     "unit_price": "Precio unitario",

@@ -20,6 +20,8 @@
     "slider_label": "Slider"
   },
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "play_model": "3D-Modell abspielen",
     "play_video": "Video abspielen",
     "unit_price": "Stückpreis",

@@ -1,0 +1,29 @@
+{% doc %}
+  Renders the bundled Atelier72 wordmark (transparent PNG) from theme assets.
+  The 'ink' file is for light backgrounds and the 'cream' file for dark backgrounds or video.
+
+  @param {string} [variant] - 'ink' (default) or 'cream'.
+  @param {string} [alt] - Alternative text. Defaults to the shop name.
+  @param {string} [class] - Classes added to the image.
+  @param {string} [loading] - 'eager' (default) or 'lazy'.
+
+  @example
+  {% render 'brand-logo', variant: 'cream', class: 'brand-footer__logo', loading: 'lazy' %}
+{% enddoc %}
+
+{%- liquid
+  assign variant = variant | default: 'ink'
+  assign alt = alt | default: shop.name
+  assign loading = loading | default: 'eager'
+  assign file = 'logo-atelier72-' | append: variant | append: '.png'
+-%}
+<img
+  src="{{ file | asset_url }}"
+  width="266"
+  height="60"
+  alt="{{ alt | escape }}"
+  loading="{{ loading }}"
+  {% if class %}
+    class="{{ class }}"
+  {% endif %}
+>

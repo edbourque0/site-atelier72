@@ -1,5 +1,7 @@
 {
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "account": "Nalog",
     "active_filters": "Aktivni filteri:",
     "cart": "Korpa",

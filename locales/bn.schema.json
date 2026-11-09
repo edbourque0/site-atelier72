@@ -21,6 +21,7 @@
     "text": "টেক্সট"
   },
   "content": {
+    "video_controls": "Video controls",
     "visible_if_collection_has_more_products": "প্রদর্শিত পরিমাণের চেয়ে কালেকশনে বেশি পণ্য থাকলে দেখা যাবে",
     "advanced": "অ্যাডভান্সড",
     "appearance": "অ্যাপিয়ারেন্স",
@@ -207,6 +208,8 @@
     "work_quickly_to_ship": "<p>যত তাড়াতাড়ি সম্ভব আপনার অর্ডার শিপ করতে আমরা দ্রুত কাজ করব। আপনার অর্ডার শিপ করা হলে, আপনি আরও বিস্তারিত তথ্য সহ একটি ইমেইল পাবেন। আপনার লোকেশনের ওপর ভিত্তি করে ডেলিভারির সময় ভিন্ন হতে পারে।</p>"
   },
   "info": {
+    "brand_hero_image": "Shown when there is no video, and as the fallback while it loads",
+    "brand_logo_files": "Uses the transparent dark and cream logo files bundled with the theme in the header and footer. Turn off to use the uploaded logos.",
     "anchor_id": "Links ending in #anchor-id scroll to this section",
     "category_image": "Defaults to the collection image",
     "category_title": "Defaults to the collection title",
@@ -244,6 +247,9 @@
     "shop_pay_payment_options": "উপলব্ধ থাকলে Shop Pay ইনস্টলমেন্টস এবং HSA/FSA ব্যাজ দেখায়।"
   },
   "names": {
+    "brand_hero": "Brand video hero",
+    "brand_footer": "Brand footer",
+    "gallery_photo": "Photo",
     "ranked_products": "Ranked products",
     "story_feature": "Story with badge",
     "category_list": "Category list",
@@ -415,6 +421,8 @@
     "comparison_slider": "তুলনামূলক স্লাইডার"
   },
   "options": {
+    "live_best_sellers": "Best sellers (live)",
+    "collection_order": "Collection order",
     "product_type": "Product type",
     "vendor": "Vendor",
     "above_carousel": "ক্যারোজেলের ওপরে",
@@ -699,6 +707,21 @@
     "below_media": "মিডিয়ার নিচে"
   },
   "settings": {
+    "brand_logo_files": "Use Atelier72 logo files",
+    "primary_button_label": "Primary button label",
+    "primary_button_link": "Primary button link",
+    "secondary_button_label": "Secondary button label",
+    "secondary_button_link": "Secondary button link",
+    "show_sound_toggle": "Show sound button",
+    "tagline": "Tagline",
+    "first_menu": "First menu",
+    "first_menu_heading": "First menu heading",
+    "second_menu": "Second menu",
+    "second_menu_heading": "Second menu heading",
+    "instagram_url": "Instagram",
+    "tiktok_url": "TikTok",
+    "facebook_url": "Facebook",
+    "product_source": "Products",
     "anchor_id": "Anchor ID",
     "accent_color": "Accent color",
     "badge_background": "Badge background",
@@ -1132,6 +1155,10 @@
     "shop_pay_payment_options": "Shop Pay পেমেন্ট বিকল্প দেখান"
   },
   "text_defaults": {
+    "brand_hero_heading": "Your brand <em>headline</em>",
+    "brand_hero_button": "Shop now",
+    "brand_footer_tagline": "Tell customers who you are in one sentence.",
+    "brand_footer_social": "Follow",
     "category_list_heading": "Shop by <em>category</em>",
     "category_list_text": "Everything you need in the bag.",
     "club_card_title": "Event",

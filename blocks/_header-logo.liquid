@@ -21,6 +21,9 @@
   endif
 
   assign alt_text_fallback = 'accessibility.home_logo_alt' | t: store_name: shop.name
+
+  # Theme-bundled transparent logo files (dark + cream) replace the uploaded images when enabled.
+  assign use_brand_files = settings.brand_logo_files
 %}
 
 {% comment %}
@@ -57,14 +60,18 @@
     {% endif %}
     data-testid="header-logo"
   >
-    {% render 'image',
-      image: settings.logo,
-      class: 'header-logo__image',
-      height: settings.logo_height,
-      alt_text_fallback: alt_text_fallback,
-      text_fallback: shop.name,
-      style: logo_style
-    %}
+    {% if use_brand_files %}
+      {% render 'brand-logo', variant: 'ink', alt: alt_text_fallback, class: 'header-logo__image header-logo__brand' %}
+    {% else %}
+      {% render 'image',
+        image: settings.logo,
+        class: 'header-logo__image',
+        height: settings.logo_height,
+        alt_text_fallback: alt_text_fallback,
+        text_fallback: shop.name,
+        style: logo_style
+      %}
+    {% endif %}
   </span>
 
   {% if use_inverse_logo %}
@@ -72,14 +79,18 @@
       class="header-logo__transparent-header-image-container"
       data-testid="header-logo-inverse"
     >
-      {% render 'image',
-        image: inverse_logo,
-        class: 'header-logo__image',
-        height: settings.logo_height,
-        alt_text_fallback: alt_text_fallback,
-        text_fallback: shop.name,
-        style: inverse_logo_style
-      %}
+      {% if use_brand_files %}
+        {% render 'brand-logo', variant: 'cream', alt: alt_text_fallback, class: 'header-logo__image header-logo__brand' %}
+      {% else %}
+        {% render 'image',
+          image: inverse_logo,
+          class: 'header-logo__image',
+          height: settings.logo_height,
+          alt_text_fallback: alt_text_fallback,
+          text_fallback: shop.name,
+          style: inverse_logo_style
+        %}
+      {% endif %}
     </span>
   {% endif %}
 </a>

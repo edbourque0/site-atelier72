@@ -1,22 +1,52 @@
 {% comment %}
   Section contract.
-  Ranked product grid: shows the first products of a collection in its own sort order, each with
-  its rank number. The first product can be featured across two columns and two rows.
+  Ranked product grid with rank numbers; the first product can be featured across two columns and
+  two rows.
+  Source "best_selling": the store's live best sellers. Liquid renders the fallback collection first,
+  then ranked-products.js requests this same section file from
+  /collections/all?sort_by=best-selling&section_id=ranked-products and swaps in those items.
+  In that request there is no saved instance, so the section renders from the URL's collection.
+  Source "collection": the chosen collection in its own sort order, without JavaScript.
   @example
-  <!-- Home page "Best sellers": pick a collection sorted by best selling in the admin -->
+  <!-- Home page "Meilleurs vendeurs": Source = Best sellers (live), 5 products -->
 {% endcomment %}
 
 {% render 'editorial-styles' %}
 
 {% liquid
-  assign collection = section.settings.collection
   assign max_products = section.settings.max_products
+  assign is_feed_request = false
+  if template.name == 'collection' and section.settings.collection == blank and collection != blank
+    assign is_feed_request = true
+  endif
+
+  if is_feed_request
+    assign source_collection = collection
+    assign max_products = 9
+  else
+    assign source_collection = section.settings.collection | default: collections.all
+  endif
+
+  assign live = false
+  if section.settings.source == 'best_selling' and is_feed_request == false
+    assign live = true
+  endif
+
+  assign has_header = false
+  if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.button_label != blank
+    assign has_header = true
+  endif
+
   assign has_background = false
   if section.settings.background_color != blank and section.settings.background_color.alpha != 0
     assign has_background = true
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
 %}
+
+{%- if live -%}
+  <script src="{{ 'ranked-products.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{%- endif -%}
 
 <div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
 <div
@@ -27,11 +57,14 @@
     --editorial-media-background: {{ section.settings.media_background }};
   "
 >
-  <div class="editorial ranked-products">
-    {%- if section.settings.eyebrow != blank
-      or section.settings.heading != blank
-      or section.settings.button_label != blank
-    -%}
+  <ranked-products
+    class="editorial ranked-products"
+    {% if live %}
+      data-feed-url="{{ routes.all_products_collection_url }}?sort_by=best-selling&section_id=ranked-products"
+      data-count="{{ max_products }}"
+    {% endif %}
+  >
+    {%- if has_header -%}
       <div class="editorial-header">
         <div class="editorial-stack">
           {%- if section.settings.eyebrow != blank -%}
@@ -43,8 +76,8 @@
         </div>
         {%- liquid
           assign button_link = section.settings.button_link
-          if button_link == blank and collection != blank
-            assign button_link = collection.url
+          if button_link == blank
+            assign button_link = source_collection.url
           endif
           render 'editorial-button', label: section.settings.button_label, link: button_link, style: section.settings.button_style
         -%}
@@ -54,9 +87,10 @@
     <ol
       class="ranked-products__grid{% if section.settings.feature_first %} ranked-products__grid--featured{% endif %}"
       role="list"
+      ref="grid"
     >
-      {%- if collection != blank and collection.products_count > 0 -%}
-        {%- for product in collection.products limit: max_products -%}
+      {%- if source_collection != blank and source_collection.products_count > 0 -%}
+        {%- for product in source_collection.products limit: max_products -%}
           {%- liquid
             assign featured = false
             if forloop.first and section.settings.feature_first
@@ -133,10 +167,14 @@
         {%- endfor -%}
       {%- endif -%}
     </ol>
-  </div>
+  </ranked-products>
 </div>
 
 {% stylesheet %}
+  ranked-products {
+    display: block;
+  }
+
   .ranked-products__grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -264,6 +302,22 @@
     "groups": ["header", "footer"]
   },
   "settings": [
+    {
+      "type": "select",
+      "id": "source",
+      "label": "t:settings.product_source",
+      "options": [
+        {
+          "value": "best_selling",
+          "label": "t:options.live_best_sellers"
+        },
+        {
+          "value": "collection",
+          "label": "t:options.collection_order"
+        }
+      ],
+      "default": "best_selling"
+    },
     {
       "type": "collection",
       "id": "collection",

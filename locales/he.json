@@ -1,5 +1,7 @@
 {
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "account": "חשבון",
     "active_filters": "מסננים פעילים:",
     "cart": "סל",

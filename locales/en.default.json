@@ -9,6 +9,8 @@
  */
 {
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "account": "Account",
     "active_filters": "Active filters:",
     "cart": "Cart",

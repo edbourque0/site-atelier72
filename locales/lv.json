@@ -1,5 +1,7 @@
 {
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "account": "Konts",
     "active_filters": "Aktīvie filtri:",
     "cart": "Grozs",

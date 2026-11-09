@@ -20,6 +20,8 @@
     "slider_label": "投影播放器"
   },
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "play_model": "播放 3D 模型",
     "play_video": "播放影片",
     "unit_price": "單價",

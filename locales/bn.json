@@ -1,5 +1,7 @@
 {
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "account": "অ্যাকাউন্ট",
     "active_filters": "সক্রিয় ফিল্টার:",
     "cart": "কার্ট",

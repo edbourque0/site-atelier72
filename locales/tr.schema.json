@@ -1,5 +1,8 @@
 {
   "names": {
+    "brand_hero": "Brand video hero",
+    "brand_footer": "Brand footer",
+    "gallery_photo": "Photo",
     "ranked_products": "Ranked products",
     "story_feature": "Story with badge",
     "category_list": "Category list",
@@ -171,6 +174,21 @@
     "disclosures": "Bildirimler"
   },
   "settings": {
+    "brand_logo_files": "Use Atelier72 logo files",
+    "primary_button_label": "Primary button label",
+    "primary_button_link": "Primary button link",
+    "secondary_button_label": "Secondary button label",
+    "secondary_button_link": "Secondary button link",
+    "show_sound_toggle": "Show sound button",
+    "tagline": "Tagline",
+    "first_menu": "First menu",
+    "first_menu_heading": "First menu heading",
+    "second_menu": "Second menu",
+    "second_menu_heading": "Second menu heading",
+    "instagram_url": "Instagram",
+    "tiktok_url": "TikTok",
+    "facebook_url": "Facebook",
+    "product_source": "Products",
     "anchor_id": "Anchor ID",
     "accent_color": "Accent color",
     "badge_background": "Badge background",
@@ -604,6 +622,8 @@
     "shop_pay_payment_options": "Shop Pay ödeme seçeneklerini göster"
   },
   "options": {
+    "live_best_sellers": "Best sellers (live)",
+    "collection_order": "Collection order",
     "product_type": "Product type",
     "vendor": "Vendor",
     "apple": "Apple",
@@ -888,6 +908,7 @@
     "input_field": "Giriş alanı"
   },
   "content": {
+    "video_controls": "Video controls",
     "background_video": "Arka plan videosu",
     "describe_the_video_for": "Ekran okuyucu kullanan müşteriler için videoyu açıklayın. [Daha fazla bilgi edinin](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#video-block)",
     "width_is_automatically_optimized": "Genişlik, mobil cihazlar için otomatik olarak optimize edilir.",
@@ -1074,6 +1095,10 @@
     "introducing_p": "<p><em>Karşınızda</em></p>"
   },
   "text_defaults": {
+    "brand_hero_heading": "Your brand <em>headline</em>",
+    "brand_hero_button": "Shop now",
+    "brand_footer_tagline": "Tell customers who you are in one sentence.",
+    "brand_footer_social": "Follow",
     "category_list_heading": "Shop by <em>category</em>",
     "category_list_text": "Everything you need in the bag.",
     "club_card_title": "Event",
@@ -1131,6 +1156,8 @@
     "disclosures": "Bildirimler"
   },
   "info": {
+    "brand_hero_image": "Shown when there is no video, and as the fallback while it loads",
+    "brand_logo_files": "Uses the transparent dark and cream logo files bundled with the theme in the header and footer. Turn off to use the uploaded logos.",
     "anchor_id": "Links ending in #anchor-id scroll to this section",
     "category_image": "Defaults to the collection image",
     "category_title": "Defaults to the collection title",

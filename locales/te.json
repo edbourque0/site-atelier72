@@ -1,5 +1,7 @@
 {
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "account": "అకౌంట్",
     "active_filters": "యాక్టివ్ ఫిల్టర్‌లు:",
     "cart": "కార్ట్",

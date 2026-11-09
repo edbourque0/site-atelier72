@@ -20,6 +20,8 @@
     "slider_label": "滑块"
   },
   "accessibility": {
+    "mute_video": "Mute video",
+    "unmute_video": "Unmute video",
     "play_model": "演示 3D 模型",
     "play_video": "播放视频",
     "unit_price": "单价",

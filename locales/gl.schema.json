@@ -21,6 +21,7 @@
     "text": "Texto"
   },
   "content": {
+    "video_controls": "Video controls",
     "visible_if_collection_has_more_products": "Visible se a colección ten máis produtos dos que se mostran",
     "advanced": "Avanzado",
     "appearance": "Aparencia",
@@ -207,6 +208,8 @@
     "work_quickly_to_ship": "<p>Traballaremos rapidamente para enviar o teu pedido o antes posible. Unha vez que se envíe o pedido, recibirás un correo electrónico con máis información. Os prazos de entrega varían en función da túa localización.</p>"
   },
   "info": {
+    "brand_hero_image": "Shown when there is no video, and as the fallback while it loads",
+    "brand_logo_files": "Uses the transparent dark and cream logo files bundled with the theme in the header and footer. Turn off to use the uploaded logos.",
     "anchor_id": "Links ending in #anchor-id scroll to this section",
     "category_image": "Defaults to the collection image",
     "category_title": "Defaults to the collection title",
@@ -244,6 +247,9 @@
     "shop_pay_payment_options": "Mostra os distintivos de Shop Pay Installments e HSA/FSA cando estean dispoñibles."
   },
   "names": {
+    "brand_hero": "Brand video hero",
+    "brand_footer": "Brand footer",
+    "gallery_photo": "Photo",
     "ranked_products": "Ranked products",
     "story_feature": "Story with badge",
     "category_list": "Category list",
@@ -415,6 +421,8 @@
     "comparison_slider": "Control desprazable de comparación"
   },
   "options": {
+    "live_best_sellers": "Best sellers (live)",
+    "collection_order": "Collection order",
     "product_type": "Product type",
     "vendor": "Vendor",
     "above_carousel": "Enriba do carrusel",
@@ -699,6 +707,21 @@
     "below_media": "Baixo o elemento multimedia"
   },
   "settings": {
+    "brand_logo_files": "Use Atelier72 logo files",
+    "primary_button_label": "Primary button label",
+    "primary_button_link": "Primary button link",
+    "secondary_button_label": "Secondary button label",
+    "secondary_button_link": "Secondary button link",
+    "show_sound_toggle": "Show sound button",
+    "tagline": "Tagline",
+    "first_menu": "First menu",
+    "first_menu_heading": "First menu heading",
+    "second_menu": "Second menu",
+    "second_menu_heading": "Second menu heading",
+    "instagram_url": "Instagram",
+    "tiktok_url": "TikTok",
+    "facebook_url": "Facebook",
+    "product_source": "Products",
     "anchor_id": "Anchor ID",
     "accent_color": "Accent color",
     "badge_background": "Badge background",
@@ -1132,6 +1155,10 @@
     "shop_pay_payment_options": "Mostrar as opcións de pagamento de Shop Pay"
   },
   "text_defaults": {
+    "brand_hero_heading": "Your brand <em>headline</em>",
+    "brand_hero_button": "Shop now",
+    "brand_footer_tagline": "Tell customers who you are in one sentence.",
+    "brand_footer_social": "Follow",
     "category_list_heading": "Shop by <em>category</em>",
     "category_list_text": "Everything you need in the bag.",
     "club_card_title": "Event",

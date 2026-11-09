@@ -1,5 +1,8 @@
 {
   "names": {
+    "brand_hero": "Vidéo de marque",
+    "brand_footer": "Pied de page de marque",
+    "gallery_photo": "Photo",
     "ranked_products": "Produits classés",
     "story_feature": "Histoire avec pastille",
     "category_list": "Liste de catégories",
@@ -171,6 +174,21 @@
     "disclosures": "Divulgations"
   },
   "settings": {
+    "brand_logo_files": "Utiliser les fichiers de logo Atelier72",
+    "primary_button_label": "Texte du bouton principal",
+    "primary_button_link": "Lien du bouton principal",
+    "secondary_button_label": "Texte du bouton secondaire",
+    "secondary_button_link": "Lien du bouton secondaire",
+    "show_sound_toggle": "Afficher le bouton de son",
+    "tagline": "Slogan",
+    "first_menu": "Premier menu",
+    "first_menu_heading": "Titre du premier menu",
+    "second_menu": "Deuxième menu",
+    "second_menu_heading": "Titre du deuxième menu",
+    "instagram_url": "Instagram",
+    "tiktok_url": "TikTok",
+    "facebook_url": "Facebook",
+    "product_source": "Produits",
     "anchor_id": "ID d'ancre",
     "accent_color": "Couleur d'accent",
     "badge_background": "Fond de la pastille",
@@ -604,6 +622,8 @@
     "shop_pay_payment_options": "Afficher les options de paiement Shop Pay"
   },
   "options": {
+    "live_best_sellers": "Meilleurs vendeurs (en direct)",
+    "collection_order": "Ordre de la collection",
     "product_type": "Type de produit",
     "vendor": "Fournisseur",
     "apple": "Pomme",
@@ -888,6 +908,7 @@
     "input_field": "Champ de saisie"
   },
   "content": {
+    "video_controls": "Contrôles vidéo",
     "background_video": "Vidéo de fond",
     "describe_the_video_for": "Décrivez la vidéo pour les clients utilisant des lecteurs d’écran. [En savoir plus](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#video-block)",
     "width_is_automatically_optimized": "La largeur est automatiquement optimisée pour les appareils mobiles.",
@@ -1074,6 +1095,10 @@
     "featured_collection_h3": "<h3>Collection en vedette</h3>"
   },
   "text_defaults": {
+    "brand_hero_heading": "Votre <em>accroche</em>",
+    "brand_hero_button": "Magasiner",
+    "brand_footer_tagline": "Présentez votre marque en une phrase.",
+    "brand_footer_social": "Suivre",
     "category_list_heading": "Magasiner <em>par catégorie</em>",
     "category_list_text": "Tout ce qu'il faut dans le sac.",
     "club_card_title": "Événement",
@@ -1131,6 +1156,8 @@
     "disclosures": "Divulgations"
   },
   "info": {
+    "brand_hero_image": "Affichée sans vidéo, et pendant le chargement de la vidéo",
+    "brand_logo_files": "Utilise les logos transparents foncé et crème fournis avec le thème dans l'en-tête et le pied de page. Désactivez pour utiliser les logos téléversés.",
     "anchor_id": "Les liens se terminant par #id-ancre défilent jusqu’à cette section",
     "category_image": "Par défaut, l'image de la collection",
     "category_title": "Par défaut, le titre de la collection",
