@@ -262,6 +262,10 @@
     "shop_pay_payment_options": "ხელმისაწვდომობის შემთხვევაში, აჩვენებს Shop Pay Installments-ისა და HSA/FSA-ს ბეჯებს."
   },
   "names": {
+    "trust_bar": "Trust bar",
+    "trust_item": "Item",
+    "editorial_pair": "Editorial pair",
+    "editorial_card": "Card",
     "ball_not_found": "Ball not found",
     "brand_hero": "Brand video hero",
     "brand_footer": "Brand footer",
@@ -437,6 +441,14 @@
     "comparison_slider": "შედარების სლაიდერი"
   },
   "options": {
+    "category_rows": "Rows",
+    "category_tiles": "Photo tiles",
+    "trust_icon_truck": "Delivery",
+    "trust_icon_lock": "Secure payment",
+    "trust_icon_chat": "Support",
+    "trust_icon_return": "Returns",
+    "trust_icon_flag": "Golf flag",
+    "trust_icon_check": "Check mark",
     "live_best_sellers": "Best sellers (live)",
     "collection_order": "Collection order",
     "product_type": "Product type",
@@ -723,6 +735,7 @@
     "below_media": "მედიის ქვემოთ"
   },
   "settings": {
+    "link_label": "Link label",
     "video_mobile": "Mobile video",
     "drawer_featured_content": "Show featured content in mobile menu",
     "menu_hide_empty_collections": "Hide menu links to empty collections",
@@ -1177,6 +1190,9 @@
     "shop_pay_payment_options": "Shop Pay-ს გადახდის ვარიანტების ჩვენება"
   },
   "text_defaults": {
+    "trust_item_title": "Free shipping",
+    "editorial_card_title": "Tell a story",
+    "editorial_card_link": "Shop now",
     "ball_not_found_eyebrow": "Error 404",
     "ball_not_found_heading": "Ball <em>not found.</em>",
     "ball_not_found_text": "Your shot went into the trees. No penalty stroke: head back to the tee.",

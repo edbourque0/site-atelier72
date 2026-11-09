@@ -9,6 +9,10 @@
  */
 {
   "names": {
+    "trust_bar": "Bandeau de confiance",
+    "trust_item": "Élément",
+    "editorial_pair": "Duo éditorial",
+    "editorial_card": "Carte",
     "ball_not_found": "Balle introuvable",
     "brand_hero": "Vidéo de marque",
     "brand_footer": "Pied de page de marque",
@@ -184,6 +188,7 @@
     "disclosures": "Divulgations"
   },
   "settings": {
+    "link_label": "Texte du lien",
     "video_mobile": "Vidéo mobile",
     "drawer_featured_content": "Afficher le contenu vedette dans le menu mobile",
     "menu_hide_empty_collections": "Masquer les liens de menu vers les collections vides",
@@ -638,6 +643,14 @@
     "shop_pay_payment_options": "Afficher les options de paiement Shop Pay"
   },
   "options": {
+    "category_rows": "Rangées",
+    "category_tiles": "Tuiles photo",
+    "trust_icon_truck": "Livraison",
+    "trust_icon_lock": "Paiement sécurisé",
+    "trust_icon_chat": "Service",
+    "trust_icon_return": "Retours",
+    "trust_icon_flag": "Drapeau de golf",
+    "trust_icon_check": "Crochet",
     "live_best_sellers": "Meilleurs vendeurs (en direct)",
     "collection_order": "Ordre de la collection",
     "product_type": "Type de produit",
@@ -1112,6 +1125,9 @@
     "featured_collection_h3": "<h3>Collection en vedette</h3>"
   },
   "text_defaults": {
+    "trust_item_title": "Livraison gratuite",
+    "editorial_card_title": "Raconte une histoire",
+    "editorial_card_link": "Magasiner",
     "ball_not_found_eyebrow": "Erreur 404",
     "ball_not_found_heading": "Balle <em>introuvable.</em>",
     "ball_not_found_text": "Ton coup est parti dans le bois. Pas de pénalité : on te ramène au départ.",

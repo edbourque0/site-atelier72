@@ -1,0 +1,245 @@
+{% comment %}
+  Section contract.
+  Compact reassurance strip, usually right under the hero: up to four short promises (shipping,
+  payment, service…), each with an outline icon and an optional second line. Blocks are the items.
+  @example
+  <!-- Home page, after the hero: « Livraison gratuite dès 100 $ », « Paiement sécurisé »… -->
+{% endcomment %}
+
+{% liquid
+  assign has_background = false
+  if section.settings.background_color != blank and section.settings.background_color.alpha != 0
+    assign has_background = true
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
+<div
+  class="section section--page-width spacing-style{% if has_background %} color-custom-{{ section.id }}{% endif %}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  {%- if section.blocks.size > 0 -%}
+    <ul class="trust-bar list-unstyled" role="list" style="--trust-bar-count: {{ section.blocks.size }};">
+      {%- for block in section.blocks -%}
+        <li class="trust-bar__item" {{ block.shopify_attributes }}>
+          <span class="trust-bar__icon" aria-hidden="true">
+            {%- case block.settings.icon -%}
+              {%- when 'truck' -%}
+                <svg viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 9h4l3 3.5V16h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg>
+              {%- when 'lock' -%}
+                <svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><path d="M12 14.5v2.5"/></svg>
+              {%- when 'chat' -%}
+                <svg viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 3.5V17h0A2.5 2.5 0 0 1 4 14.5z"/><path d="M8.5 9.5h7M8.5 12.5h4.5"/></svg>
+              {%- when 'return' -%}
+                <svg viewBox="0 0 24 24"><path d="M9 8 5 12l4 4"/><path d="M5 12h10a4 4 0 0 1 0 8h-2"/></svg>
+              {%- when 'flag' -%}
+                <svg viewBox="0 0 24 24"><path d="M6 21V4"/><path d="M6 5h10l-2 3.5L16 12H6"/></svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.2 2.3 2.3 4.7-4.9"/></svg>
+            {%- endcase -%}
+          </span>
+          <span class="trust-bar__text">
+            {%- if block.settings.title != blank -%}
+              <span class="trust-bar__title">{{ block.settings.title | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <span class="trust-bar__detail">{{ block.settings.text | escape }}</span>
+            {%- endif -%}
+          </span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .trust-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--brand-space-4, 1rem);
+    margin: 0;
+    padding: 0;
+  }
+
+  .trust-bar__item {
+    display: flex;
+    align-items: center;
+    gap: var(--brand-space-3, 0.75rem);
+    min-width: 0;
+  }
+
+  .trust-bar__icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    border-radius: var(--brand-radius-pill, 999px);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
+    color: var(--brand-primary, var(--color-foreground));
+  }
+
+  [class*='color-custom-'] .trust-bar__icon {
+    color: inherit;
+  }
+
+  .trust-bar__icon svg {
+    inline-size: 1.375rem;
+    block-size: 1.375rem;
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .trust-bar__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .trust-bar__title {
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .trust-bar__detail {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  @media (min-width: 750px) {
+    .trust-bar {
+      grid-template-columns: repeat(var(--trust-bar-count, 3), minmax(0, 1fr));
+      gap: var(--brand-space-5, 1.5rem);
+    }
+
+    .trust-bar__item {
+      justify-content: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.trust_bar",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:names.trust_item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "t:settings.icon",
+          "options": [
+            {
+              "value": "truck",
+              "label": "t:options.trust_icon_truck"
+            },
+            {
+              "value": "lock",
+              "label": "t:options.trust_icon_lock"
+            },
+            {
+              "value": "chat",
+              "label": "t:options.trust_icon_chat"
+            },
+            {
+              "value": "return",
+              "label": "t:options.trust_icon_return"
+            },
+            {
+              "value": "flag",
+              "label": "t:options.trust_icon_flag"
+            },
+            {
+              "value": "check",
+              "label": "t:options.trust_icon_check"
+            }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:settings.title",
+          "default": "t:text_defaults.trust_item_title"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:settings.text"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.trust_bar",
+      "category": "t:categories.text",
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "icon": "truck"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "icon": "lock"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "icon": "chat"
+          }
+        }
+      },
+      "block_order": ["item_1", "item_2", "item_3"]
+    }
+  ]
+}
+{% endschema %}
