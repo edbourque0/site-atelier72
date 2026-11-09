@@ -1,7 +1,8 @@
 {% comment %}
   Section contract.
-  Newsletter band: a large heading and short text beside the theme's email signup block, which
-  keeps its own form, success and error handling.
+  Newsletter band: a large heading and short text beside a pill email field with an integrated
+  button. Submits Shopify's customer form with the "newsletter" tag and shows the success or error
+  message in place.
   @example
   <!-- Home page "Rejoins le club" on the sand background -->
 {% endcomment %}
@@ -14,6 +15,7 @@
     assign has_background = true
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
+  assign form_id = 'NewsletterBand-' | append: section.id
 %}
 
 <div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
@@ -30,9 +32,48 @@
         <p class="editorial-text">{{ section.settings.text | escape }}</p>
       {%- endif -%}
     </div>
-    <div class="newsletter-band__form">
-      {% content_for 'block', type: 'email-signup', id: 'newsletter-form' %}
-    </div>
+
+    {%- form 'customer', id: form_id, class: 'newsletter-band__form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="newsletter-band__field">
+        <label for="{{ form_id }}-email" class="visually-hidden">{{ 'blocks.email_signup.label' | t }}</label>
+        <input
+          id="{{ form_id }}-email"
+          class="newsletter-band__input"
+          type="email"
+          name="contact[email]"
+          autocomplete="email"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          placeholder="{{ 'blocks.email_signup.placeholder' | t }}"
+          required
+          {% if form.errors %}
+            aria-invalid="true"
+            aria-describedby="{{ form_id }}-message"
+          {% elsif form.posted_successfully? %}
+            aria-describedby="{{ form_id }}-message"
+          {% endif %}
+        >
+        <button type="submit" class="button newsletter-band__button">
+          {%- if section.settings.button_label != blank -%}
+            {{- section.settings.button_label | escape -}}
+          {%- else -%}
+            {{- 'actions.sign_up' | t -}}
+          {%- endif -%}
+        </button>
+      </div>
+      {%- if form.errors -%}
+        <p id="{{ form_id }}-message" class="newsletter-band__message" role="alert">
+          {{ form.errors.translated_fields.email | capitalize }}
+          {{ form.errors.messages.email }}
+        </p>
+      {%- elsif form.posted_successfully? -%}
+        <p id="{{ form_id }}-message" class="newsletter-band__message" role="status">
+          {{ 'blocks.email_signup.success' | t }}
+        </p>
+      {%- endif -%}
+    {%- endform -%}
   </div>
 </div>
 
@@ -43,20 +84,68 @@
     justify-content: space-between;
     align-items: center;
     gap: 2.5rem;
-    max-width: 77.5rem;
-    margin-inline: auto;
     inline-size: 100%;
+    max-inline-size: 77.5rem;
+    margin-inline: auto;
   }
 
   .newsletter-band__text {
     flex: 1 1 20rem;
-    max-width: 35rem;
+    max-inline-size: 35rem;
   }
 
   .newsletter-band__form {
     flex: 1 1 26rem;
-    max-width: 33.75rem;
+    max-inline-size: 33.75rem;
     min-width: 0;
+  }
+
+  .newsletter-band__field {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.4375rem;
+    border-radius: var(--style-border-radius-pills);
+    background-color: var(--palette-lightest);
+  }
+
+  .newsletter-band__input.newsletter-band__input {
+    flex: 1;
+    min-width: 0;
+    min-height: 3.25rem;
+    padding-inline: 1.25rem;
+    border: 0;
+    background: transparent;
+    color: var(--palette-darkest);
+    font-size: 1rem;
+    box-shadow: none;
+  }
+
+  .newsletter-band__input:focus-visible {
+    outline: 2px solid var(--color-primary-button-background);
+    outline-offset: 2px;
+    border-radius: var(--style-border-radius-pills);
+  }
+
+  .newsletter-band__button.button {
+    flex: 0 0 auto;
+    min-height: 3.25rem;
+    padding-inline: 1.5rem;
+  }
+
+  .newsletter-band__message {
+    margin: 0.75rem 0 0;
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 479px) {
+    .newsletter-band__field {
+      flex-direction: column;
+      border-radius: 1.75rem;
+    }
+
+    .newsletter-band__button.button {
+      inline-size: 100%;
+    }
   }
 {% endstylesheet %}
 
@@ -67,11 +156,6 @@
   "disabled_on": {
     "groups": ["header"]
   },
-  "blocks": [
-    {
-      "type": "email-signup"
-    }
-  ],
   "settings": [
     {
       "type": "inline_richtext",
@@ -84,6 +168,12 @@
       "id": "text",
       "label": "t:settings.text",
       "default": "t:text_defaults.newsletter_band_text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.label",
+      "default": "t:text_defaults.sign_up"
     },
     {
       "type": "color",
@@ -120,20 +210,7 @@
   "presets": [
     {
       "name": "t:names.newsletter_band",
-      "category": "t:categories.forms",
-      "blocks": {
-        "newsletter-form": {
-          "type": "email-signup",
-          "static": true,
-          "settings": {
-            "width": "fill",
-            "integrated_button": true,
-            "input_style": "custom",
-            "input_background_color": "{{ settings.color_palette.background }}",
-            "border_style": "none"
-          }
-        }
-      }
+      "category": "t:categories.forms"
     }
   ]
 }
