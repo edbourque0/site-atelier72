@@ -209,6 +209,7 @@
     "work_quickly_to_ship": "<p>અમે શક્ય તેટલી વહેલી તકે તમારો ઑર્ડર શિપ કરવા માટે ઝડપથી કામ કરીશું. એકવાર તમારો ઑર્ડર શિપ થઈ જાય, પછી તમને વધુ માહિતી સાથેનો ઇમેઇલ મળશે. ડિલિવરીનો સમય તમારા લોકેશનના આધારે બદલાય છે.</p>"
   },
   "info": {
+    "drawer_featured_content": "Turn off to show only links in the mobile menu, without the featured products, collections or link images.",
     "menu_hide_empty_collections": "Menu links to collections with no products available in the online store are hidden in the header, mobile menu and footer.",
     "brand_accent_color": "Tobacco by default. Used for focus rings, kickers and limited-edition tags.",
     "brand_highlight_color": "Tee yellow by default. Use sparingly for promos and progress bars. Text on it switches to light or dark automatically.",
@@ -712,6 +713,7 @@
     "below_media": "મીડિયાની નીચે"
   },
   "settings": {
+    "drawer_featured_content": "Show featured content in mobile menu",
     "menu_hide_empty_collections": "Hide menu links to empty collections",
     "brand_accent_color": "Accent",
     "brand_highlight_color": "Highlight",

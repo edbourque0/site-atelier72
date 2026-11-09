@@ -6,6 +6,7 @@
   @param {string} [data_header_drawer_type] - The type of header drawer to render
   @param {object} [block] - The block that can be used to provide settings
   @param {object} [section] - The section that can be used to provide settings
+  @param {string} [menu_style] - Overrides the block's menu style in the drawer, e.g. 'text' for links only.
 
   @example
   {% render 'header-drawer', linklist: section.settings.menu, class: 'header-drawer--mobile' %}
@@ -18,9 +19,12 @@
   assign max_featured_items = 4
   assign image_border_radius = block_settings.image_border_radius
 
-  if block_settings.menu_style == 'featured_collections'
+  # The caller can pass 'text' to drop featured products / collections and link images, leaving only links.
+  assign drawer_menu_style = menu_style | default: block_settings.menu_style
+
+  if drawer_menu_style == 'featured_collections'
     assign ratio = block_settings.featured_collections_aspect_ratio
-  elsif block_settings.menu_style == 'featured_products'
+  elsif drawer_menu_style == 'featured_products'
     assign ratio = block_settings.featured_products_aspect_ratio
   endif
 
@@ -143,7 +147,7 @@
                       </summary>
                       {% liquid
                         assign render_link_image = false
-                        if block_settings.menu_style == 'collection_images'
+                        if drawer_menu_style == 'collection_images'
                           assign catalog_links = link.links | where: 'type', 'catalog_link'
                           assign collection_list_links = link.links | where: 'type', 'collections_link'
                           assign collection_links = link.links | where: 'type', 'collection_link'
@@ -205,7 +209,7 @@
                   </a>
                   {% liquid
                     assign render_link_image = false
-                    if block_settings.menu_style == 'collection_images'
+                    if drawer_menu_style == 'collection_images'
                       assign catalog_links = link.links | where: 'type', 'catalog_link'
                       assign collection_list_links = link.links | where: 'type', 'collections_link'
                       assign collection_links = link.links | where: 'type', 'collection_link'
@@ -330,7 +334,7 @@
                         </div>
                         {% liquid
                           assign render_link_image = false
-                          if block_settings.menu_style == 'collection_images'
+                          if drawer_menu_style == 'collection_images'
                             assign catalog_links = link.links | where: 'type', 'catalog_link'
                             assign collection_list_links = link.links | where: 'type', 'collections_link'
                             assign collection_links = link.links | where: 'type', 'collection_link'
@@ -409,7 +413,7 @@
                                       </summary>
                                       {% liquid
                                         assign render_link_image = false
-                                        if block_settings.menu_style == 'collection_images'
+                                        if drawer_menu_style == 'collection_images'
                                           assign catalog_links = childlink.links | where: 'type', 'catalog_link'
                                           assign collection_list_links = childlink.links | where: 'type', 'collections_link'
                                           assign collection_links = childlink.links | where: 'type', 'collection_link'
@@ -475,7 +479,7 @@
                                   </a>
                                   {% liquid
                                     assign render_link_image = false
-                                    if block_settings.menu_style == 'collection_images'
+                                    if drawer_menu_style == 'collection_images'
                                       assign catalog_links = childlink.links | where: 'type', 'catalog_link'
                                       assign collection_list_links = childlink.links | where: 'type', 'collections_link'
                                       assign collection_links = childlink.links | where: 'type', 'collection_link'
@@ -524,11 +528,11 @@
                         </ul>
                         {% liquid
                           if eager_loading
-                            if block_settings.menu_style == 'featured_collections'
+                            if drawer_menu_style == 'featured_collections'
                               assign featured_collections = link.links | where: 'type', 'collection_link'
                             endif
 
-                            if block_settings.menu_style == 'featured_products'
+                            if drawer_menu_style == 'featured_products'
                               assign collection_linklist = link.links | where: 'type', 'collection_link' | first
                               assign featured_products_collection = collection_linklist.object
                             endif
@@ -731,11 +735,11 @@
       </div>
 
       {% liquid
-        if block_settings.menu_style == 'featured_collections'
+        if drawer_menu_style == 'featured_collections'
           assign top_level_featured_collections = linklist.links | where: 'type', 'collection_link'
         endif
 
-        if eager_loading and block_settings.menu_style == 'featured_products'
+        if eager_loading and drawer_menu_style == 'featured_products'
           for link in linklist.links
             if link.type == 'collection_link'
               assign collection_linklist = link
