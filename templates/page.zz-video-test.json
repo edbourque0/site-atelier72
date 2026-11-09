@@ -1,0 +1,23 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "brand-hero",
+      "settings": {
+        "video": "shopify://files/videos/A72 - edited.mp4",
+        "video_mobile": "shopify://files/videos/Atelier 72 Ciné site web.mov"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
