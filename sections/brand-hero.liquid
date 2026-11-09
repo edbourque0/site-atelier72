@@ -122,6 +122,8 @@
 
 {% stylesheet %}
   .brand-hero {
+    --brand-focus: currentcolor;
+
     position: relative;
     display: grid;
     align-items: end;
@@ -193,17 +195,16 @@
   }
 
   .brand-hero__eyebrow {
-    --editorial-accent: #c9b48a;
+    --editorial-accent: var(--palette-lightest);
   }
 
   .brand-hero__heading {
     margin: 0;
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
-    font-size: clamp(3.25rem, 7vw, 7rem);
-    line-height: 0.95;
-    letter-spacing: 0.005em;
-    text-transform: uppercase;
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
     color: inherit;
     text-wrap: balance;
   }
@@ -230,8 +231,9 @@
   }
 
   .brand-hero__caption {
-    font-size: 0.6875rem;
-    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: var(--brand-tracking-eyebrow, 0.14em);
     text-transform: uppercase;
     color: rgb(var(--palette-lightest-rgb) / var(--opacity-80));
   }
@@ -247,7 +249,7 @@
     background: none;
     color: inherit;
     cursor: pointer;
-    transition: background-color var(--animation-speed) var(--animation-easing);
+    transition: background-color var(--brand-duration, 0.18s) var(--brand-ease, ease-out);
   }
 
   .brand-hero__control:hover {

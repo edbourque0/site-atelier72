@@ -32,7 +32,7 @@
       <div class="brand-footer__brand">
         <a href="{{ routes.root_url }}" class="brand-footer__logo-link">
           {%- if settings.brand_logo_files -%}
-            {% render 'brand-logo', variant: 'cream', class: 'brand-footer__logo', loading: 'lazy' %}
+            {% render 'brand-logo', variant: 'cream', lockup: 'stacked', class: 'brand-footer__logo', loading: 'lazy' %}
           {%- elsif settings.logo_inverse != blank -%}
             {{ settings.logo_inverse | image_url: width: 600 | image_tag: class: 'brand-footer__logo', loading: 'lazy', alt: shop.name }}
           {%- else -%}
@@ -121,14 +121,15 @@
 
   .brand-footer__logo {
     display: block;
-    block-size: 3.75rem;
+    block-size: 5.5rem;
     inline-size: auto;
   }
 
   .brand-footer__wordmark {
     font-family: var(--font-heading--family);
     font-size: 2rem;
-    text-transform: uppercase;
+    font-weight: var(--font-heading--weight);
+    letter-spacing: var(--brand-tracking-display, -0.02em);
     color: var(--color-foreground);
   }
 
@@ -147,8 +148,10 @@
 
   .brand-footer__heading {
     margin: 0 0 0.75rem;
-    font-size: 0.6875rem;
-    letter-spacing: 0.22em;
+    font-family: var(--font-accent--family);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: var(--brand-tracking-eyebrow, 0.14em);
     text-transform: uppercase;
     color: var(--brand-footer-accent);
   }
@@ -284,7 +287,7 @@
       "type": "color",
       "id": "accent_color",
       "label": "t:settings.accent_color",
-      "default": "#C9B48A"
+      "default": "{{ settings.color_palette.color4 }}"
     }
   ],
   "presets": [

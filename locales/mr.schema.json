@@ -21,6 +21,7 @@
     "text": "मजकूर"
   },
   "content": {
+    "brand_accents": "Brand accents",
     "video_controls": "Video controls",
     "visible_if_collection_has_more_products": "दर्शवल्यापेक्षा जास्त उत्पादने संग्रहामध्ये असल्यास दृश्यमान",
     "advanced": "प्रगत",
@@ -208,8 +209,10 @@
     "work_quickly_to_ship": "<p>तुमची ऑर्डर लवकरात लवकर शिप करण्यासाठी आम्ही तत्परतेने काम करू. तुमची ऑर्डर शिप झाल्यावर, तुम्हाला पुढील माहितीसह एक ईमेल मिळेल. डिलिव्हरीची वेळ तुमच्या ठिकाणानुसार बदलू शकते.</p>"
   },
   "info": {
+    "brand_accent_color": "Tobacco by default. Used for focus rings, kickers and limited-edition tags.",
+    "brand_highlight_color": "Tee yellow by default. Use sparingly for promos and progress bars. Text on it switches to light or dark automatically.",
     "brand_hero_image": "Shown when there is no video, and as the fallback while it loads",
-    "brand_logo_files": "Uses the transparent dark and cream logo files bundled with the theme in the header and footer. Turn off to use the uploaded logos.",
+    "brand_logo_files": "Uses the Atelier72 SVG logos bundled with the theme: the green horizontal lockup in the header, cream over transparent headers and the cream stacked lockup in the footer. Turn off to use the uploaded logos.",
     "anchor_id": "Links ending in #anchor-id scroll to this section",
     "category_image": "Defaults to the collection image",
     "category_title": "Defaults to the collection title",
@@ -707,6 +710,8 @@
     "below_media": "मीडियाच्या खाली"
   },
   "settings": {
+    "brand_accent_color": "Accent",
+    "brand_highlight_color": "Highlight",
     "show_play_toggle": "Show pause button",
     "brand_logo_files": "Use Atelier72 logo files",
     "primary_button_label": "Primary button label",

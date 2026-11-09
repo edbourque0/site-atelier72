@@ -1,26 +1,43 @@
 {% doc %}
-  Renders the bundled Atelier72 wordmark (transparent PNG) from theme assets.
-  The 'ink' file is for light backgrounds and the 'cream' file for dark backgrounds or video.
+  Renders a bundled Atelier72 logo lockup (single-ink SVG from the brand design system).
+  Pick the ink for the ground: 'green' (fairway) on crème or white, 'cream' on fairway, tobacco,
+  black or photography. 'ink' is kept as an alias of 'green' for existing callers.
 
-  @param {string} [variant] - 'ink' (default) or 'cream'.
+  @param {string} [variant] - 'green' (default), 'cream', or 'ink' (alias of 'green').
+  @param {string} [lockup] - 'horizontal' (default, headers and tight heights) or 'stacked' (primary mark).
   @param {string} [alt] - Alternative text. Defaults to the shop name.
   @param {string} [class] - Classes added to the image.
   @param {string} [loading] - 'eager' (default) or 'lazy'.
 
   @example
-  {% render 'brand-logo', variant: 'cream', class: 'brand-footer__logo', loading: 'lazy' %}
+  {% render 'brand-logo', variant: 'cream', lockup: 'stacked', class: 'brand-footer__logo', loading: 'lazy' %}
 {% enddoc %}
 
 {%- liquid
-  assign variant = variant | default: 'ink'
+  assign variant = variant | default: 'green'
+  if variant == 'ink'
+    assign variant = 'green'
+  endif
+  assign lockup = lockup | default: 'horizontal'
   assign alt = alt | default: shop.name
   assign loading = loading | default: 'eager'
-  assign file = 'logo-atelier72-' | append: variant | append: '.png'
+
+  # Intrinsic sizes match each lockup's SVG viewBox.
+  if lockup == 'stacked'
+    assign width = 736
+    assign height = 436
+  else
+    assign lockup = 'horizontal'
+    assign width = 964
+    assign height = 261
+  endif
+
+  assign file = 'logo-atelier72-' | append: lockup | append: '-' | append: variant | append: '.svg'
 -%}
 <img
   src="{{ file | asset_url }}"
-  width="266"
-  height="60"
+  width="{{ width }}"
+  height="{{ height }}"
   alt="{{ alt | escape }}"
   loading="{{ loading }}"
   {% if class %}
