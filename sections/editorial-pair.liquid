@@ -1,0 +1,286 @@
+{% comment %}
+  Section contract.
+  Two-up editorial: an optional header, then side-by-side lifestyle cards (stacked on phones). Each
+  Card block holds a large photo, a title, a short line and a text link; the whole photo is a link.
+  @example
+  <!-- Home page: « Le polo qui tient la route. » next to « Le détail qui fait la différence. » -->
+{% endcomment %}
+
+{% render 'editorial-styles' %}
+
+{% liquid
+  assign has_background = false
+  if section.settings.background_color != blank and section.settings.background_color.alpha != 0
+    assign has_background = true
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
+<div
+  class="section section--page-width spacing-style{% if has_background %} color-custom-{{ section.id }}{% endif %}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="editorial editorial-pair">
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+      <div class="editorial-stack editorial-pair__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="editorial-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="editorial-heading h2">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="editorial-pair__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign link = block.settings.link
+          assign heading_id = 'EditorialPairTitle-' | append: block.id
+        -%}
+        <article class="editorial-pair__card" aria-labelledby="{{ heading_id }}" {{ block.shopify_attributes }}>
+          {%- capture media -%}
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 1600
+                | image_tag:
+                  widths: '400, 600, 800, 1000, 1200, 1600',
+                  sizes: '(min-width: 750px) 50vw, 100vw',
+                  loading: 'lazy',
+                  alt: ''
+              }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'editorial-pair__placeholder' }}
+            {%- endif -%}
+          {%- endcapture -%}
+          {%- if link != blank -%}
+            <a class="editorial-pair__media editorial-media" href="{{ link }}" tabindex="-1" aria-hidden="true">
+              {{- media -}}
+            </a>
+          {%- else -%}
+            <div class="editorial-pair__media editorial-media">{{- media -}}</div>
+          {%- endif -%}
+
+          <div class="editorial-pair__body">
+            {%- if block.settings.title != blank -%}
+              <h3 id="{{ heading_id }}" class="editorial-pair__title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="editorial-pair__text">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+            {%- if link != blank and block.settings.link_label != blank -%}
+              <a class="editorial-pair__link" href="{{ link }}">
+                {{- block.settings.link_label | escape -}}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .editorial-pair__header {
+    margin-block-end: var(--editorial-gap);
+  }
+
+  .editorial-pair__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--brand-space-7, 3rem) var(--brand-space-5, 1.5rem);
+  }
+
+  .editorial-pair__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--brand-space-4, 1rem);
+    min-width: 0;
+  }
+
+  .editorial-pair__media {
+    aspect-ratio: 4 / 5;
+  }
+
+  .editorial-pair__placeholder {
+    fill: rgb(var(--color-foreground-rgb) / var(--opacity-30));
+  }
+
+  .editorial-pair__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--brand-space-2, 0.5rem);
+    max-inline-size: 34rem;
+  }
+
+  .editorial-pair__title {
+    margin: 0;
+    font-family: var(--font-accent--family);
+    font-weight: var(--font-accent--weight);
+    font-size: clamp(1.375rem, 2vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    overflow-wrap: break-word;
+  }
+
+  .editorial-pair__text {
+    margin: 0;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
+  }
+
+  .editorial-pair__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--brand-space-2, 0.5rem);
+    align-self: flex-start;
+    margin-block-start: var(--brand-space-1, 0.25rem);
+    padding-block: var(--brand-space-2, 0.5rem);
+    font-weight: 600;
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-decoration-color: currentcolor;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.3em;
+  }
+
+  .editorial-pair__link svg {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform var(--brand-duration, 0.18s) var(--brand-ease, ease-out);
+  }
+
+  .editorial-pair__link svg:dir(rtl) {
+    transform: scaleX(-1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .editorial-pair__link:hover svg {
+      transform: translateX(0.25rem);
+    }
+
+    .editorial-pair__link:dir(rtl):hover svg {
+      transform: scaleX(-1) translateX(0.25rem);
+    }
+  }
+
+  @media (min-width: 750px) {
+    .editorial-pair__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.editorial_pair",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "card",
+      "name": "t:names.editorial_card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:settings.title",
+          "default": "t:text_defaults.editorial_card_title"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:settings.text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:settings.link"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "t:settings.link_label",
+          "default": "t:text_defaults.editorial_card_link"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:settings.eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:settings.heading"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.editorial_pair",
+      "category": "t:categories.banners",
+      "blocks": {
+        "card_1": {
+          "type": "card"
+        },
+        "card_2": {
+          "type": "card"
+        }
+      },
+      "block_order": ["card_1", "card_2"]
+    }
+  ]
+}
+{% endschema %}
