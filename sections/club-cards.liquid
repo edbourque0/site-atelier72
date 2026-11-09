@@ -1,7 +1,8 @@
 {% comment %}
   Section contract.
-  Community card grid: a header with an eyebrow, heading and button, then tall cards (Card blocks)
-  with an image or solid color, a tag, a large title and a caption.
+  Community section: a header with an eyebrow, heading and button, then app blocks (for example an
+  Instagram feed app showing the latest posts) and optional tall cards (Card blocks) with an image or
+  solid color, a tag, a large title and a caption.
   @example
   <!-- Home page "Le club Atelier72" on the green background -->
 {% endcomment %}
@@ -42,8 +43,34 @@
       %}
     </div>
 
+    {%- liquid
+      assign card_count = 0
+      assign app_count = 0
+      for block in section.blocks
+        if block.type == '@app'
+          assign app_count = app_count | plus: 1
+        else
+          assign card_count = card_count | plus: 1
+        endif
+      endfor
+    -%}
+
+    {%- if app_count > 0 -%}
+      <div class="club-cards__feed">
+        {%- for block in section.blocks -%}
+          {%- if block.type == '@app' -%}
+            {% render block %}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if card_count > 0 -%}
     <ul class="club-cards__grid" role="list">
       {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}
+          {%- continue -%}
+        {%- endif -%}
         {%- liquid
           assign tag_name = 'div'
           if block.settings.link != blank
@@ -90,6 +117,7 @@
         </li>
       {%- endfor -%}
     </ul>
+    {%- endif -%}
   </div>
 </div>
 
@@ -152,6 +180,14 @@
     color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
   }
 
+  .club-cards__feed {
+    min-width: 0;
+  }
+
+  .club-cards__feed + .club-cards__grid {
+    margin-block-start: 1.25rem;
+  }
+
   .club-cards__card:focus-visible {
     outline-offset: 0.25rem;
   }
@@ -166,6 +202,9 @@
   },
   "max_blocks": 6,
   "blocks": [
+    {
+      "type": "@app"
+    },
     {
       "type": "card",
       "name": "t:names.card",

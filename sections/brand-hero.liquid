@@ -86,21 +86,23 @@
       {%- endif -%}
     </div>
 
-    {%- if has_video -%}
+    {%- if has_video and section.settings.show_play_toggle or has_video and section.settings.show_sound_toggle -%}
       <div class="brand-hero__controls">
         {%- if section.settings.caption != blank -%}
           <span class="brand-hero__caption">{{ section.settings.caption | escape }}</span>
         {%- endif -%}
-        <button
-          type="button"
-          class="brand-hero__control"
-          ref="playToggle"
-          on:click="/togglePlay"
-          aria-label="{{ 'accessibility.pause_video' | t | escape }}"
-        >
-          <svg class="brand-hero__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
-          <svg class="brand-hero__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-        </button>
+        {%- if section.settings.show_play_toggle -%}
+          <button
+            type="button"
+            class="brand-hero__control"
+            ref="playToggle"
+            on:click="/togglePlay"
+            aria-label="{{ 'accessibility.pause_video' | t | escape }}"
+          >
+            <svg class="brand-hero__icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+            <svg class="brand-hero__icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        {%- endif -%}
         {%- if section.settings.show_sound_toggle -%}
           <button
             type="button"
@@ -369,6 +371,12 @@
       "type": "text",
       "id": "caption",
       "label": "t:settings.caption"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_play_toggle",
+      "label": "t:settings.show_play_toggle",
+      "default": true
     },
     {
       "type": "checkbox",

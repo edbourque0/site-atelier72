@@ -707,6 +707,7 @@
     "below_media": "મીડિયાની નીચે"
   },
   "settings": {
+    "show_play_toggle": "Show pause button",
     "brand_logo_files": "Use Atelier72 logo files",
     "primary_button_label": "Primary button label",
     "primary_button_link": "Primary button link",
