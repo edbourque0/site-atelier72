@@ -28,11 +28,19 @@
       data-hydration-key="header-drawer-mobile"
       {{ block.shopify_attributes }}
     >
+      {% liquid
+        # Links only in the mobile drawer when its featured content is turned off.
+        assign drawer_menu_style = block_settings.menu_style
+        unless block_settings.drawer_featured_content
+          assign drawer_menu_style = 'text'
+        endunless
+      %}
       {% render 'header-drawer',
         linklist: block_settings.menu,
         data_header_drawer_type: 'mobile-drawer',
         block: block,
-        section: section
+        section: section,
+        menu_style: drawer_menu_style
       %}
     </div>
 
@@ -1191,6 +1199,13 @@
       "label": "t:settings.navigation_bar_text_color",
       "placeholder": "t:settings.default",
       "visible_if": "{{ block.settings.navigation_bar }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "drawer_featured_content",
+      "label": "t:settings.drawer_featured_content",
+      "info": "t:info.drawer_featured_content",
+      "default": true
     },
     {
       "type": "checkbox",

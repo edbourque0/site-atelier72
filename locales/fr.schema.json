@@ -175,6 +175,7 @@
     "disclosures": "Divulgations"
   },
   "settings": {
+    "drawer_featured_content": "Afficher le contenu vedette dans le menu mobile",
     "menu_hide_empty_collections": "Masquer les liens de menu vers les collections vides",
     "brand_accent_color": "Accent",
     "brand_highlight_color": "Surbrillance",
@@ -1167,6 +1168,7 @@
     "disclosures": "Divulgations"
   },
   "info": {
+    "drawer_featured_content": "Désactivez pour afficher seulement les liens dans le menu mobile, sans les produits, collections ou images vedettes.",
     "menu_hide_empty_collections": "Les liens de menu vers les collections sans produit disponible dans la boutique en ligne sont masqués dans l'en-tête, le menu mobile et le pied de page.",
     "brand_accent_color": "Tabac par défaut. Utilisé pour les contours de focus, les surtitres et les étiquettes d'édition limitée.",
     "brand_highlight_color": "Jaune tee par défaut. À utiliser avec parcimonie pour les promos et les barres de progression. Le texte passe automatiquement en clair ou foncé.",
