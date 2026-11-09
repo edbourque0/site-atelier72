@@ -99,11 +99,11 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    border-block-start: 1px solid var(--color-foreground);
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-15));
   }
 
   .category-list__item {
-    border-block-end: 1px solid var(--color-foreground);
+    border-block-end: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-15));
   }
 
   .category-list__row {
@@ -141,10 +141,9 @@
     min-width: 0;
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
-    font-size: clamp(2.125rem, 4.8vw, 4.5rem);
-    line-height: 1;
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
     overflow-wrap: anywhere;
   }
 
@@ -161,7 +160,7 @@
   .category-list__thumb {
     flex: 0 0 7.5rem;
     block-size: 5.25rem;
-    border-radius: var(--style-border-radius-pills);
+    border-radius: var(--editorial-radius);
   }
 
   .category-list__arrow {
@@ -267,13 +266,13 @@
       "type": "color",
       "id": "accent_color",
       "label": "t:settings.accent_color",
-      "default": "#8A6A3C"
+      "default": "#8B5F3C"
     },
     {
       "type": "color",
       "id": "media_background",
       "label": "t:settings.media_background",
-      "default": "#E7E0CE"
+      "default": "{{ settings.color_palette.color4 }}"
     },
     {
       "type": "header",

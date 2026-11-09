@@ -1,0 +1,70 @@
+{% doc %}
+  Outputs the Atelier72 design-system color tokens that depend on theme settings, as `--brand-*`
+  custom properties on :root. Static tokens (spacing, radii, motion, status colors) live in
+  `assets/brand.css`. Render after `color-palette` so palette-derived values are available.
+
+  Palette slots used when present: color3 (hairline), color4 (crème surface), color7 (control border).
+  Each falls back to a value derived from the page colors when the merchant removes the slot.
+
+  @example
+  {% render 'brand-tokens' %}
+{% enddoc %}
+
+{%- liquid
+  assign accent = settings.brand_accent_color | default: '#8B5F3C'
+  assign highlight = settings.brand_highlight_color | default: '#E3B23C'
+  assign primary = settings.palette_primary_button_background
+
+  # Text on the highlight fill follows its brightness, like the theme's other smart-contrast pairs.
+  assign highlight_brightness = highlight | color_brightness
+  if highlight_brightness > 128
+    assign on_highlight = settings.page_text_color
+  else
+    assign on_highlight = settings.page_background_color
+  endif
+
+  assign accent_brightness = accent | color_brightness
+  if accent_brightness > 128
+    assign on_accent = settings.page_text_color
+  else
+    assign on_accent = settings.page_background_color
+  endif
+
+  assign surface_alt = settings.color_palette.color4
+  assign line = settings.color_palette.color3
+  assign line_strong = settings.color_palette.color7
+-%}
+
+{% style %}
+  :root {
+    --brand-primary: {{ primary }};
+    --brand-primary-rgb: {{ primary.rgb }};
+    --brand-accent: {{ accent }};
+    --brand-accent-rgb: {{ accent.rgb }};
+    --brand-on-accent: {{ on_accent }};
+    --brand-highlight: {{ highlight }};
+    --brand-highlight-rgb: {{ highlight.rgb }};
+    --brand-on-highlight: {{ on_highlight }};
+    {%- if surface_alt != blank %}
+      --brand-surface-alt: {{ surface_alt }};
+    {%- else %}
+      --brand-surface-alt: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+    {%- endif %}
+    {%- if line != blank %}
+      --brand-line: {{ line }};
+    {%- else %}
+      --brand-line: rgb(var(--color-foreground-rgb) / var(--opacity-15));
+    {%- endif %}
+    {%- if line_strong != blank %}
+      --brand-line-strong: {{ line_strong }};
+    {%- else %}
+      --brand-line-strong: rgb(var(--color-foreground-rgb) / var(--opacity-60));
+    {%- endif %}
+    --brand-primary-soft: rgb(var(--brand-primary-rgb) / var(--opacity-15));
+    --brand-accent-soft: rgb(var(--brand-accent-rgb) / var(--opacity-8));
+    --brand-focus: var(--brand-accent);
+    --brand-shadow-card: 0 1px 2px rgb(var(--color-foreground-rgb) / 0.06),
+      0 8px 24px rgb(var(--color-foreground-rgb) / 0.08);
+    --brand-shadow-pop: 0 12px 40px rgb(var(--brand-primary-rgb) / 0.18);
+  }
+{% endstyle %}

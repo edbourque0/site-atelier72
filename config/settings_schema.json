@@ -73,6 +73,24 @@
           "background": "#ffffff",
           "foreground": "#000000"
         }
+      },
+      {
+        "type": "header",
+        "content": "t:content.brand_accents"
+      },
+      {
+        "type": "color",
+        "id": "brand_accent_color",
+        "label": "t:settings.brand_accent_color",
+        "info": "t:info.brand_accent_color",
+        "default": "#8B5F3C"
+      },
+      {
+        "type": "color",
+        "id": "brand_highlight_color",
+        "label": "t:settings.brand_highlight_color",
+        "info": "t:info.brand_highlight_color",
+        "default": "#E3B23C"
       }
     ]
   },
@@ -236,8 +254,16 @@
             "label": "24px"
           },
           {
+            "value": "28",
+            "label": "28px"
+          },
+          {
             "value": "32",
             "label": "32px"
+          },
+          {
+            "value": "38",
+            "label": "38px"
           },
           {
             "value": "40",
@@ -246,6 +272,10 @@
           {
             "value": "48",
             "label": "48px"
+          },
+          {
+            "value": "52",
+            "label": "52px"
           },
           {
             "value": "56",
@@ -384,8 +414,16 @@
             "label": "24px"
           },
           {
+            "value": "28",
+            "label": "28px"
+          },
+          {
             "value": "32",
             "label": "32px"
+          },
+          {
+            "value": "38",
+            "label": "38px"
           },
           {
             "value": "40",
@@ -394,6 +432,10 @@
           {
             "value": "48",
             "label": "48px"
+          },
+          {
+            "value": "52",
+            "label": "52px"
           },
           {
             "value": "56",
@@ -540,8 +582,16 @@
             "label": "24px"
           },
           {
+            "value": "28",
+            "label": "28px"
+          },
+          {
             "value": "32",
             "label": "32px"
+          },
+          {
+            "value": "38",
+            "label": "38px"
           },
           {
             "value": "40",
@@ -550,6 +600,10 @@
           {
             "value": "48",
             "label": "48px"
+          },
+          {
+            "value": "52",
+            "label": "52px"
           },
           {
             "value": "56",
@@ -696,8 +750,16 @@
             "label": "24px"
           },
           {
+            "value": "28",
+            "label": "28px"
+          },
+          {
             "value": "32",
             "label": "32px"
+          },
+          {
+            "value": "38",
+            "label": "38px"
           },
           {
             "value": "40",
@@ -706,6 +768,10 @@
           {
             "value": "48",
             "label": "48px"
+          },
+          {
+            "value": "52",
+            "label": "52px"
           },
           {
             "value": "56",
@@ -852,8 +918,16 @@
             "label": "24px"
           },
           {
+            "value": "28",
+            "label": "28px"
+          },
+          {
             "value": "32",
             "label": "32px"
+          },
+          {
+            "value": "38",
+            "label": "38px"
           },
           {
             "value": "40",
@@ -862,6 +936,10 @@
           {
             "value": "48",
             "label": "48px"
+          },
+          {
+            "value": "52",
+            "label": "52px"
           },
           {
             "value": "56",
@@ -1008,8 +1086,16 @@
             "label": "24px"
           },
           {
+            "value": "28",
+            "label": "28px"
+          },
+          {
             "value": "32",
             "label": "32px"
+          },
+          {
+            "value": "38",
+            "label": "38px"
           },
           {
             "value": "40",
@@ -1018,6 +1104,10 @@
           {
             "value": "48",
             "label": "48px"
+          },
+          {
+            "value": "52",
+            "label": "52px"
           },
           {
             "value": "56",

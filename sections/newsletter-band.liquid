@@ -121,7 +121,7 @@
   }
 
   .newsletter-band__input:focus-visible {
-    outline: 2px solid var(--color-primary-button-background);
+    outline: 2px solid var(--palette-darkest);
     outline-offset: 2px;
     border-radius: var(--style-border-radius-pills);
   }
@@ -180,7 +180,7 @@
       "id": "background_color",
       "label": "t:settings.background_color",
       "alpha": true,
-      "default": "#C9B48A"
+      "default": "{{ settings.color_palette.color1 }}"
     },
     {
       "type": "header",

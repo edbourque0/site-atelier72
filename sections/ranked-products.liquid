@@ -219,12 +219,14 @@
     position: absolute;
     inset-block-start: 1.125rem;
     inset-inline-end: 1.125rem;
-    padding: 0.4375rem 0.625rem;
-    border-radius: var(--style-border-radius-pills);
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font-size: 0.625rem;
-    letter-spacing: 0.18em;
+    padding: var(--brand-space-1, 0.25rem) 0.625rem;
+    border-radius: var(--brand-radius-pill, 999px);
+    background-color: var(--brand-primary-soft, var(--color-background));
+    color: var(--brand-primary, var(--color-foreground));
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.34;
+    letter-spacing: var(--brand-tracking-eyebrow, 0.14em);
     text-transform: uppercase;
   }
 
@@ -245,9 +247,9 @@
   .ranked-products__title {
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
-    font-size: 1.1875rem;
-    line-height: 1.1;
-    text-transform: uppercase;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
     color: var(--color-foreground);
     text-decoration: none;
     overflow-wrap: anywhere;
@@ -264,6 +266,7 @@
 
   .ranked-products__price {
     flex: 0 0 auto;
+    font-variant-numeric: tabular-nums;
     text-align: end;
   }
 
@@ -421,13 +424,13 @@
       "type": "color",
       "id": "accent_color",
       "label": "t:settings.accent_color",
-      "default": "#8A6A3C"
+      "default": "#8B5F3C"
     },
     {
       "type": "color",
       "id": "media_background",
       "label": "t:settings.media_background",
-      "default": "#E7E0CE"
+      "default": "{{ settings.color_palette.color4 }}"
     },
     {
       "type": "header",

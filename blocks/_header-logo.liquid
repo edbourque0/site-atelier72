@@ -61,7 +61,7 @@
     data-testid="header-logo"
   >
     {% if use_brand_files %}
-      {% render 'brand-logo', variant: 'ink', alt: alt_text_fallback, class: 'header-logo__image header-logo__brand' %}
+      {% render 'brand-logo', variant: 'green', alt: alt_text_fallback, class: 'header-logo__image header-logo__brand' %}
     {% else %}
       {% render 'image',
         image: settings.logo,

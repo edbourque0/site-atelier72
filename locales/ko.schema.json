@@ -174,6 +174,8 @@
     "disclosures": "고지 사항"
   },
   "settings": {
+    "brand_accent_color": "Accent",
+    "brand_highlight_color": "Highlight",
     "show_play_toggle": "Show pause button",
     "brand_logo_files": "Use Atelier72 logo files",
     "primary_button_label": "Primary button label",
@@ -909,6 +911,7 @@
     "direction_top_start": "왼쪽 상단"
   },
   "content": {
+    "brand_accents": "Brand accents",
     "video_controls": "Video controls",
     "background_video": "배경 비디오",
     "describe_the_video_for": "스크린리더를 사용하는 고객에게 슬라이드 쇼를 설명합니다. [자세히 알아보기](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#video-block)",
@@ -1157,8 +1160,10 @@
     "disclosures": "고지 사항"
   },
   "info": {
+    "brand_accent_color": "Tobacco by default. Used for focus rings, kickers and limited-edition tags.",
+    "brand_highlight_color": "Tee yellow by default. Use sparingly for promos and progress bars. Text on it switches to light or dark automatically.",
     "brand_hero_image": "Shown when there is no video, and as the fallback while it loads",
-    "brand_logo_files": "Uses the transparent dark and cream logo files bundled with the theme in the header and footer. Turn off to use the uploaded logos.",
+    "brand_logo_files": "Uses the Atelier72 SVG logos bundled with the theme: the green horizontal lockup in the header, cream over transparent headers and the cream stacked lockup in the footer. Turn off to use the uploaded logos.",
     "anchor_id": "Links ending in #anchor-id scroll to this section",
     "category_image": "Defaults to the collection image",
     "category_title": "Defaults to the collection title",
