@@ -2,6 +2,7 @@
   Section contract.
   Full-screen brand video hero: a muted, looping background video (or image) under a dark gradient,
   with an eyebrow, a display heading, two pill buttons and pause / sound controls in the bottom bar.
+  An optional vertical Mobile video replaces the main video on phones (749px and narrower).
   Designed as the first section under a transparent header.
   @example
   <!-- Home page, first section. Upload an MP4 in the Video setting and a poster image as fallback -->
@@ -11,11 +12,20 @@
 
 {%- liquid
   assign video = section.settings.video
+  assign video_mobile = section.settings.video_mobile
   assign image = section.settings.image
   assign has_video = false
-  if video != blank
+  if video != blank or video_mobile != blank
     assign has_video = true
   endif
+
+  # With both videos set, phones get the mobile one and larger screens the main one. Neither
+  # autoplays from markup: brand-hero.js starts only the visible video so just one downloads.
+  assign has_both_videos = false
+  if video != blank and video_mobile != blank
+    assign has_both_videos = true
+  endif
+  assign single_video = video | default: video_mobile
 -%}
 
 {%- if has_video -%}
@@ -31,9 +41,34 @@
   data-label-unmute="{{ 'accessibility.unmute_video' | t | escape }}"
 >
   <div class="brand-hero__media">
-    {%- if has_video -%}
+    {%- if has_both_videos -%}
       {{
         video
+        | video_tag:
+          autoplay: false,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          controls: false,
+          preload: 'none',
+          image_size: '1920x',
+          class: 'brand-hero__video brand-hero__video--desktop'
+      }}
+      {{
+        video_mobile
+        | video_tag:
+          autoplay: false,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          controls: false,
+          preload: 'none',
+          image_size: '1080x',
+          class: 'brand-hero__video brand-hero__video--mobile'
+      }}
+    {%- elsif has_video -%}
+      {{
+        single_video
         | video_tag:
           autoplay: true,
           loop: true,
@@ -153,6 +188,20 @@
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
+  }
+
+  .brand-hero__media .brand-hero__video--mobile {
+    display: none;
+  }
+
+  @media (max-width: 749px) {
+    .brand-hero__media .brand-hero__video--desktop {
+      display: none;
+    }
+
+    .brand-hero__media .brand-hero__video--mobile {
+      display: block;
+    }
   }
 
   .brand-hero__placeholder {
@@ -292,6 +341,12 @@
       "type": "video",
       "id": "video",
       "label": "t:settings.video"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "t:settings.video_mobile",
+      "info": "t:info.video_mobile"
     },
     {
       "type": "image_picker",

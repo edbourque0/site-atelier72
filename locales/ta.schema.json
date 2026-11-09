@@ -209,6 +209,7 @@
     "work_quickly_to_ship": "<p>கூடிய விரைவில் உங்கள் ஆர்டரை ஷிப்பிங் செய்ய நாங்கள் துரிதமாகச் செயல்படுவோம். உங்கள் ஆர்டர் ஷிப்பிங் செய்யப்பட்டவுடன், மேலதிகத் தகவல்களுடன் உங்களுக்கு ஒரு மின்னஞ்சல் வரும். டெலிவரி நேரங்கள் உங்கள் இருப்பிடத்தைப் பொறுத்து மாறுபடும்.</p>"
   },
   "info": {
+    "video_mobile": "Optional. A vertical video for phones (749px and narrower). The main video plays on larger screens.",
     "drawer_featured_content": "Turn off to show only links in the mobile menu, without the featured products, collections or link images.",
     "menu_hide_empty_collections": "Menu links to collections with no products available in the online store are hidden in the header, mobile menu and footer.",
     "brand_accent_color": "Tobacco by default. Used for focus rings, kickers and limited-edition tags.",
@@ -713,6 +714,7 @@
     "below_media": "மீடியாவுக்குக் கீழே"
   },
   "settings": {
+    "video_mobile": "Mobile video",
     "drawer_featured_content": "Show featured content in mobile menu",
     "menu_hide_empty_collections": "Hide menu links to empty collections",
     "brand_accent_color": "Accent",
