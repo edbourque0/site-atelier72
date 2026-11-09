@@ -441,6 +441,7 @@
     "comparison_slider": "Salīdzināšanas slīdnis"
   },
   "options": {
+    "trust_icon_pin": "Location",
     "category_rows": "Rows",
     "category_tiles": "Photo tiles",
     "trust_icon_truck": "Delivery",

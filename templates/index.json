@@ -1565,26 +1565,17 @@
             "text": "Dès 100 $ d'achat"
           }
         },
-        "item_payment": {
-          "type": "item",
-          "settings": {
-            "icon": "lock",
-            "title": "Paiement sécurisé",
-            "text": "Transactions protégées par Shopify"
-          }
-        },
         "item_service": {
           "type": "item",
           "settings": {
-            "icon": "chat",
-            "title": "Service en français",
-            "text": "Écris-nous, on s'en occupe."
+            "icon": "pin",
+            "title": "Conçu au Québec",
+            "text": ""
           }
         }
       },
       "block_order": [
         "item_shipping",
-        "item_payment",
         "item_service"
       ],
       "settings": {

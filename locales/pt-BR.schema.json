@@ -643,6 +643,7 @@
     "shop_pay_payment_options": "Exibir opções de pagamento do Shop Pay"
   },
   "options": {
+    "trust_icon_pin": "Location",
     "category_rows": "Rows",
     "category_tiles": "Photo tiles",
     "trust_icon_truck": "Delivery",

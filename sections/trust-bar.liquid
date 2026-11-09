@@ -33,6 +33,8 @@
                 <svg viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 3.5V17h0A2.5 2.5 0 0 1 4 14.5z"/><path d="M8.5 9.5h7M8.5 12.5h4.5"/></svg>
               {%- when 'return' -%}
                 <svg viewBox="0 0 24 24"><path d="M9 8 5 12l4 4"/><path d="M5 12h10a4 4 0 0 1 0 8h-2"/></svg>
+              {%- when 'pin' -%}
+                <svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
               {%- when 'flag' -%}
                 <svg viewBox="0 0 24 24"><path d="M6 21V4"/><path d="M6 5h10l-2 3.5L16 12H6"/></svg>
               {%- else -%}
@@ -156,6 +158,10 @@
             {
               "value": "return",
               "label": "t:options.trust_icon_return"
+            },
+            {
+              "value": "pin",
+              "label": "t:options.trust_icon_pin"
             },
             {
               "value": "flag",

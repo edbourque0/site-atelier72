@@ -643,6 +643,7 @@
     "shop_pay_payment_options": "顯示 Shop Pay 付款選項"
   },
   "options": {
+    "trust_icon_pin": "Location",
     "category_rows": "Rows",
     "category_tiles": "Photo tiles",
     "trust_icon_truck": "Delivery",

@@ -643,6 +643,7 @@
     "shop_pay_payment_options": "Afficher les options de paiement Shop Pay"
   },
   "options": {
+    "trust_icon_pin": "Lieu",
     "category_rows": "Rangées",
     "category_tiles": "Tuiles photo",
     "trust_icon_truck": "Livraison",
