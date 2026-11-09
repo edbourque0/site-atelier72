@@ -209,6 +209,7 @@
     "work_quickly_to_ship": "<p>سنعمل بسرعة لشحن طلبك في أقرب وقت ممكن. بمجرد شحن طلبك، ستتلقى رسالة بريد إلكتروني تحتوي على مزيد من المعلومات. تختلف أوقات التوصيل حسب موقعك.</p>"
   },
   "info": {
+    "menu_hide_empty_collections": "Menu links to collections with no products available in the online store are hidden in the header, mobile menu and footer.",
     "brand_accent_color": "Tobacco by default. Used for focus rings, kickers and limited-edition tags.",
     "brand_highlight_color": "Tee yellow by default. Use sparingly for promos and progress bars. Text on it switches to light or dark automatically.",
     "brand_hero_image": "Shown when there is no video, and as the fallback while it loads",
@@ -710,6 +711,7 @@
     "below_media": "أسفل الوسائط"
   },
   "settings": {
+    "menu_hide_empty_collections": "Hide menu links to empty collections",
     "brand_accent_color": "Accent",
     "brand_highlight_color": "Highlight",
     "show_play_toggle": "Show pause button",

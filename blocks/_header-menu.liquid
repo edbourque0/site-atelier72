@@ -6,6 +6,15 @@
   @param {string} [transparent] - Show a transparent menu
 {%- enddoc -%}
 
+{%- liquid
+  # Menu links to collections with no products published to the online store are skipped when the
+  # theme setting is on. -1 never matches a product count, so nothing is skipped when it is off.
+  assign empty_collection_count = -1
+  if settings.menu_hide_empty_collections
+    assign empty_collection_count = 0
+  endif
+-%}
+
 {% liquid
   assign block_settings = block.settings
   assign effective_submenu_color = block_settings.background_color | default: settings.page_background_color
@@ -46,6 +55,7 @@
             role="list"
           >
             {% for link in block_settings.menu.links %}
+              {%- if link.object.products_count == empty_collection_count -%}{%- continue -%}{%- endif -%}
               <li>
                 <a
                   href="{{ link.url }}"
@@ -94,6 +104,7 @@
 
     {% capture children %}
       {% for link in block_settings.menu.links %}
+        {%- if link.object.products_count == empty_collection_count -%}{%- continue -%}{%- endif -%}
         <li
           class="menu-list__list-item"
           on:blur="/deactivate"

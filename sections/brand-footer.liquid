@@ -6,6 +6,15 @@
   <!-- Footer group. Pick menus in the section settings; social URLs are plain links -->
 {% endcomment %}
 
+{%- liquid
+  # Menu links to collections with no products published to the online store are skipped when the
+  # theme setting is on. -1 never matches a product count, so nothing is skipped when it is off.
+  assign empty_collection_count = -1
+  if settings.menu_hide_empty_collections
+    assign empty_collection_count = 0
+  endif
+-%}
+
 {% liquid
   assign has_background = false
   if section.settings.background_color != blank and section.settings.background_color.alpha != 0
@@ -56,6 +65,7 @@
               <p class="brand-footer__heading">{{ section.settings[heading_key] | default: menu.title | escape }}</p>
               <ul class="brand-footer__links" role="list">
                 {%- for link in menu.links -%}
+                  {%- if link.object.products_count == empty_collection_count -%}{%- continue -%}{%- endif -%}
                   <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
                 {%- endfor -%}
               </ul>

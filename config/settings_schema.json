@@ -1222,6 +1222,13 @@
           }
         ],
         "default": "narrow"
+      },
+      {
+        "type": "checkbox",
+        "id": "menu_hide_empty_collections",
+        "label": "t:settings.menu_hide_empty_collections",
+        "info": "t:info.menu_hide_empty_collections",
+        "default": true
       }
     ]
   },
