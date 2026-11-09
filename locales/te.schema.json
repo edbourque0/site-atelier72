@@ -209,6 +209,7 @@
     "work_quickly_to_ship": "<p>వీలైనంత త్వరగా మీ ఆర్డర్‌ను షిప్ చేయడానికి మేము వేగంగా పని చేస్తాము. మీ ఆర్డర్ షిప్ చేయబడిన తర్వాత, మీరు తదుపరి సమాచారంతో కూడిన ఇమెయిల్‌ను అందుకుంటారు. మీ లొకేషన్‌ను బట్టి డెలివరీ సమయాలు మారుతూ ఉంటాయి.</p>"
   },
   "info": {
+    "video_mobile": "Optional. A vertical video for phones (749px and narrower). The main video plays on larger screens.",
     "drawer_featured_content": "Turn off to show only links in the mobile menu, without the featured products, collections or link images.",
     "menu_hide_empty_collections": "Menu links to collections with no products available in the online store are hidden in the header, mobile menu and footer.",
     "brand_accent_color": "Tobacco by default. Used for focus rings, kickers and limited-edition tags.",
@@ -713,6 +714,7 @@
     "below_media": "మీడియా దిగువన"
   },
   "settings": {
+    "video_mobile": "Mobile video",
     "drawer_featured_content": "Show featured content in mobile menu",
     "menu_hide_empty_collections": "Hide menu links to empty collections",
     "brand_accent_color": "Accent",
