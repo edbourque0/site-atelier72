@@ -1534,6 +1534,7 @@
       "type": "brand-hero",
       "settings": {
         "video": "shopify://files/videos/A72 - edited.mp4",
+        "video_mobile": "shopify://files/videos/Atelier 72 Ciné site web.mov",
         "image": "shopify://shop_images/566207005_122102206683076552_4505580620150548743_n_-_Copy.jpg",
         "height": "full",
         "overlay_opacity": 60,
