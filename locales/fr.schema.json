@@ -1,5 +1,6 @@
 {
   "names": {
+    "ball_not_found": "Balle introuvable",
     "brand_hero": "Vidéo de marque",
     "brand_footer": "Pied de page de marque",
     "gallery_photo": "Photo",
@@ -1100,6 +1101,11 @@
     "featured_collection_h3": "<h3>Collection en vedette</h3>"
   },
   "text_defaults": {
+    "ball_not_found_eyebrow": "Erreur 404",
+    "ball_not_found_heading": "Balle <em>introuvable.</em>",
+    "ball_not_found_text": "Ton coup est parti dans le bois. Pas de pénalité : on te ramène au départ.",
+    "ball_not_found_button": "Retour au départ",
+    "ball_not_found_secondary": "Voir la boutique",
     "brand_hero_heading": "Votre <em>accroche</em>",
     "brand_hero_button": "Magasiner",
     "brand_footer_tagline": "Présentez votre marque en une phrase.",

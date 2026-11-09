@@ -251,6 +251,7 @@
     "shop_pay_payment_options": "ხელმისაწვდომობის შემთხვევაში, აჩვენებს Shop Pay Installments-ისა და HSA/FSA-ს ბეჯებს."
   },
   "names": {
+    "ball_not_found": "Ball not found",
     "brand_hero": "Brand video hero",
     "brand_footer": "Brand footer",
     "gallery_photo": "Photo",
@@ -1163,6 +1164,11 @@
     "shop_pay_payment_options": "Shop Pay-ს გადახდის ვარიანტების ჩვენება"
   },
   "text_defaults": {
+    "ball_not_found_eyebrow": "Error 404",
+    "ball_not_found_heading": "Ball <em>not found.</em>",
+    "ball_not_found_text": "Your shot went into the trees. No penalty stroke: head back to the tee.",
+    "ball_not_found_button": "Back to the tee",
+    "ball_not_found_secondary": "Shop the collection",
     "brand_hero_heading": "Your brand <em>headline</em>",
     "brand_hero_button": "Shop now",
     "brand_footer_tagline": "Tell customers who you are in one sentence.",

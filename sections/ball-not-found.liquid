@@ -1,0 +1,424 @@
+{% comment %}
+  Section contract.
+  Golf-themed "ball not found" panel for the 404 template: an eyebrow, a display heading, a short
+  line and two pill buttons beside a decorative illustration. The tee shot sails into the pines,
+  the ball peeks out from behind a tree, and a magnifying glass searches the wrong spot.
+  The illustration is drawn with theme color tokens, so it follows the palette and brand accents.
+  @example
+  <!-- 404 template, first section. Edit the copy and buttons in the section settings -->
+{% endcomment %}
+
+{% render 'editorial-styles' %}
+
+{% liquid
+  assign has_background = false
+  if section.settings.background_color != blank and section.settings.background_color.alpha != 0
+    assign has_background = true
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
+<div
+  class="section section--page-width spacing-style{% if has_background %} color-custom-{{ section.id }}{% endif %}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="editorial ball-not-found">
+    <div class="ball-not-found__content editorial-stack">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="editorial-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="editorial-heading h1">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="editorial-text ball-not-found__text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank or section.settings.secondary_label != blank -%}
+        <div class="ball-not-found__actions">
+          {% render 'editorial-button',
+            label: section.settings.button_label,
+            link: section.settings.button_link
+          %}
+          {% render 'editorial-button',
+            label: section.settings.secondary_label,
+            link: section.settings.secondary_link,
+            style: 'outline',
+            show_arrow: false
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="ball-not-found__art">
+      <svg
+        class="ball-not-found__svg"
+        viewBox="0 0 560 400"
+        width="560"
+        height="400"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <defs>
+          <clipPath id="BallNotFoundClip-{{ section.id }}">
+            <rect width="560" height="400" rx="24"/>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#BallNotFoundClip-{{ section.id }})">
+        <rect class="bnf-sky" width="560" height="400"/>
+        <path class="bnf-hill" d="M0 292C110 250 220 248 330 272C420 292 490 276 560 254V400H0Z"/>
+
+        <path
+          class="bnf-trail"
+          d="M38 326Q190 -40 366 250"
+          fill="none"
+        />
+
+        <g class="bnf-ball">
+          <circle class="bnf-ball__body" cx="376" cy="262" r="17"/>
+          <circle class="bnf-ball__dimple" cx="370" cy="270" r="1.8"/>
+          <circle class="bnf-ball__dimple" cx="378" cy="273" r="1.8"/>
+          <circle class="bnf-ball__dimple" cx="364" cy="264" r="1.8"/>
+          <circle class="bnf-ball__eye" cx="367" cy="257" r="2.8"/>
+          <circle class="bnf-ball__eye" cx="376" cy="257" r="2.8"/>
+        </g>
+
+        <g class="bnf-tree">
+          <polygon points="505,170 532,222 478,222"/>
+          <polygon points="505,200 540,262 470,262"/>
+          <polygon points="430,118 466,190 394,190"/>
+          <polygon points="430,150 478,236 382,236"/>
+          <polygon points="430,190 490,290 370,290"/>
+        </g>
+        <rect class="bnf-trunk" x="422" y="286" width="16" height="30" rx="3"/>
+        <rect class="bnf-trunk" x="499" y="258" width="12" height="40" rx="3"/>
+
+        <path class="bnf-green" d="M0 338C130 296 290 302 410 322C470 332 520 330 560 322V400H0Z"/>
+        <ellipse class="bnf-putting" cx="220" cy="346" rx="120" ry="20"/>
+        <path class="bnf-tuft" d="M70 368l5-12 4 10 5-14 4 12M326 362l5-12 4 10 5-14 4 12M480 358l5-12 4 10 5-14 4 12" fill="none"/>
+
+        <path class="bnf-tee" d="M31 322h14l-5 5v16h-4v-16z"/>
+
+        <ellipse class="bnf-hole" cx="248" cy="346" rx="13" ry="4.5"/>
+        <line class="bnf-pole" x1="248" y1="344" x2="248" y2="174"/>
+        <g class="bnf-flag">
+          <path class="bnf-flag__cloth" d="M250 176C272 168 292 184 322 176V226C292 234 272 218 250 226Z"/>
+          <text class="bnf-flag__text" x="286" y="210" text-anchor="middle">404</text>
+        </g>
+
+        <g class="bnf-glass">
+          <circle class="bnf-glass__lens" cx="120" cy="250" r="30"/>
+          <line class="bnf-glass__handle" x1="142" y1="272" x2="168" y2="298"/>
+          <text class="bnf-glass__mark" x="120" y="262" text-anchor="middle">?</text>
+        </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .ball-not-found {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: var(--editorial-gap);
+  }
+
+  .ball-not-found__content {
+    min-width: 0;
+  }
+
+  .ball-not-found__text {
+    font-size: 1.125rem;
+    line-height: 1.55;
+  }
+
+  .ball-not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--brand-space-3, 0.75rem);
+    margin-block-start: var(--brand-space-2, 0.5rem);
+  }
+
+  .ball-not-found__art {
+    order: -1;
+    min-width: 0;
+  }
+
+  .ball-not-found__svg {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: 36rem;
+    block-size: auto;
+    margin-inline: auto;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ball-not-found {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    }
+
+    .ball-not-found__art {
+      order: 0;
+    }
+  }
+
+  /* Illustration: every fill follows the palette and brand tokens. */
+  .bnf-sky {
+    fill: var(--brand-surface-alt, rgb(var(--color-foreground-rgb) / var(--opacity-5)));
+  }
+
+  .bnf-hill {
+    fill: var(--brand-line, rgb(var(--color-foreground-rgb) / var(--opacity-15)));
+  }
+
+  .bnf-trail {
+    stroke: var(--color-foreground);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 2 10;
+    opacity: 0.45;
+  }
+
+  .bnf-tree polygon {
+    fill: var(--color-primary-button-hover-background, var(--brand-primary));
+    stroke: var(--color-primary-button-hover-background, var(--brand-primary));
+    stroke-width: 8;
+    stroke-linejoin: round;
+  }
+
+  .bnf-trunk,
+  .bnf-tee {
+    fill: var(--brand-accent, var(--color-foreground));
+  }
+
+  .bnf-green {
+    fill: var(--brand-primary, var(--color-foreground));
+  }
+
+  .bnf-putting {
+    fill: var(--brand-surface-alt, var(--color-background));
+    opacity: 0.16;
+  }
+
+  .bnf-tuft {
+    stroke: var(--brand-surface-alt, var(--color-background));
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.4;
+  }
+
+  .bnf-hole,
+  .bnf-ball__eye {
+    fill: var(--color-foreground);
+  }
+
+  .bnf-pole {
+    stroke: var(--color-foreground);
+    stroke-width: 4;
+    stroke-linecap: round;
+  }
+
+  .bnf-flag__cloth {
+    fill: var(--brand-highlight, var(--color-primary-button-background));
+  }
+
+  .bnf-flag__text,
+  .bnf-glass__mark {
+    font-family: var(--font-heading--family);
+    font-weight: 800;
+  }
+
+  .bnf-flag__text {
+    font-size: 22px;
+    fill: var(--brand-on-highlight, var(--color-foreground));
+  }
+
+  .bnf-ball__body {
+    fill: var(--palette-lightest, #fff);
+    stroke: var(--color-foreground);
+    stroke-width: 3;
+  }
+
+  .bnf-ball__dimple {
+    fill: rgb(var(--color-foreground-rgb) / var(--opacity-20));
+  }
+
+  .bnf-glass__lens {
+    fill: var(--brand-surface-alt, var(--color-background));
+    stroke: var(--color-foreground);
+    stroke-width: 6;
+  }
+
+  .bnf-glass__handle {
+    stroke: var(--color-foreground);
+    stroke-width: 10;
+    stroke-linecap: round;
+  }
+
+  .bnf-glass__mark {
+    font-size: 32px;
+    fill: var(--brand-primary, var(--color-foreground));
+  }
+
+  .bnf-ball,
+  .bnf-glass,
+  .bnf-flag__cloth,
+  .bnf-flag__text {
+    transform-box: fill-box;
+  }
+
+  .bnf-flag__cloth,
+  .bnf-flag__text {
+    transform-origin: left center;
+  }
+
+  /* Quiet, looping motion; nothing bounces. */
+  @media (prefers-reduced-motion: no-preference) {
+    .bnf-ball {
+      animation: bnf-peek 4.8s ease-in-out infinite;
+    }
+
+    .bnf-glass {
+      animation: bnf-search 3.6s ease-in-out infinite alternate;
+    }
+
+    .bnf-flag__cloth,
+    .bnf-flag__text {
+      animation: bnf-wave 2.4s ease-in-out infinite alternate;
+    }
+  }
+
+  @keyframes bnf-peek {
+    0%,
+    55%,
+    100% {
+      transform: translateX(0);
+    }
+
+    65%,
+    85% {
+      transform: translateX(-10px);
+    }
+  }
+
+  @keyframes bnf-search {
+    from {
+      transform: translateX(-12px) rotate(-6deg);
+    }
+
+    to {
+      transform: translateX(16px) rotate(4deg);
+    }
+  }
+
+  @keyframes bnf-wave {
+    from {
+      transform: scaleX(1);
+    }
+
+    to {
+      transform: scaleX(0.92);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.ball_not_found",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:settings.eyebrow",
+      "default": "t:text_defaults.ball_not_found_eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.ball_not_found_heading"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "t:text_defaults.ball_not_found_text"
+    },
+    {
+      "type": "header",
+      "content": "t:content.buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.primary_button_label",
+      "default": "t:text_defaults.ball_not_found_button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:settings.primary_button_link",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "t:settings.secondary_button_label",
+      "default": "t:text_defaults.ball_not_found_secondary"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "t:settings.secondary_button_link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.ball_not_found",
+      "category": "t:categories.banners"
+    }
+  ]
+}
+{% endschema %}
