@@ -1,0 +1,322 @@
+{% comment %}
+  Section contract.
+  Typographic category index: full-width numbered rows, each linking to a collection with a short
+  description and a pill-shaped thumbnail. Rows take the primary button colors on hover.
+  @example
+  <!-- Home page "Magasiner par catégorie": add one Category block per collection -->
+{% endcomment %}
+
+{% render 'editorial-styles' %}
+
+{% liquid
+  assign has_background = false
+  if section.settings.background_color != blank and section.settings.background_color.alpha != 0
+    assign has_background = true
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
+<div
+  class="section section--full-width spacing-style{% if has_background %} color-custom-{{ section.id }}{% endif %}"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --editorial-accent: {{ section.settings.accent_color }};
+    --editorial-media-background: {{ section.settings.media_background }};
+  "
+>
+  <div class="editorial category-list">
+    {%- if section.settings.heading != blank or section.settings.text != blank -%}
+      <div class="editorial-header category-list__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="editorial-heading h2">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="category-list__intro">{{ section.settings.text | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <ol class="category-list__rows" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign collection = block.settings.collection
+          assign title = block.settings.title | default: collection.title
+          if title == blank
+            assign title = 'placeholders.collection_title' | t
+          endif
+          assign image = block.settings.image | default: collection.featured_image
+          if image == blank and collection != blank
+            assign image = collection.products.first.featured_media
+          endif
+          assign number = forloop.index | prepend: '0' | slice: -2, 2
+        -%}
+        {%- if collection != blank or request.design_mode -%}
+          <li class="category-list__item" {{ block.shopify_attributes }}>
+            <a
+              class="category-list__row"
+              href="{{ collection.url | default: routes.collections_url }}"
+            >
+              <span class="category-list__number" aria-hidden="true">{{ number }}</span>
+              <span class="category-list__name">
+                {{- title | escape -}}
+              </span>
+              {%- if block.settings.description != blank -%}
+                <span class="category-list__description">{{ block.settings.description | escape }}</span>
+              {%- endif -%}
+              <span class="category-list__thumb editorial-media" aria-hidden="true">
+                {%- if image != blank -%}
+                  {{
+                    image
+                    | image_url: width: 480
+                    | image_tag: widths: '160, 240, 320, 480', sizes: '120px', loading: 'lazy', alt: ''
+                  }}
+                {%- endif -%}
+              </span>
+              <span class="category-list__arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ol>
+  </div>
+</div>
+
+{% stylesheet %}
+  .category-list__header {
+    padding-inline: var(--util-page-margin-offset);
+  }
+
+  .category-list__intro {
+    margin: 0;
+    max-width: 20rem;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .category-list__rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: 1px solid var(--color-foreground);
+  }
+
+  .category-list__item {
+    border-block-end: 1px solid var(--color-foreground);
+  }
+
+  .category-list__row {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 3rem);
+    padding-block: 1.375rem;
+    padding-inline: var(--util-page-margin-offset);
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      color var(--animation-speed) var(--animation-easing);
+  }
+
+  .category-list__row:hover,
+  .category-list__row:focus-visible {
+    background-color: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+  }
+
+  .category-list__row:focus-visible {
+    outline-offset: -0.25rem;
+  }
+
+  .category-list__number {
+    flex: 0 0 2rem;
+    font-family: var(--font-accent--family);
+    font-weight: var(--font-accent--weight);
+    font-size: 1.125rem;
+    color: var(--editorial-accent);
+  }
+
+  .category-list__name {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(2.125rem, 4.8vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .category-list__description {
+    flex: 0 1 16.25rem;
+    font-size: 0.875rem;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .category-list__row:is(:hover, :focus-visible) :is(.category-list__number, .category-list__description) {
+    color: inherit;
+  }
+
+  .category-list__thumb {
+    flex: 0 0 7.5rem;
+    block-size: 5.25rem;
+    border-radius: var(--style-border-radius-pills);
+  }
+
+  .category-list__arrow {
+    display: grid;
+    place-items: center;
+    flex: 0 0 3.25rem;
+    block-size: 3.25rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      color var(--animation-speed) var(--animation-easing);
+  }
+
+  .category-list__arrow svg {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+  }
+
+  .category-list__arrow svg:dir(rtl) {
+    transform: scaleX(-1);
+  }
+
+  .category-list__row:is(:hover, :focus-visible) .category-list__arrow {
+    background-color: var(--color-primary-button-text);
+    color: var(--color-primary-button-background);
+  }
+
+  @media (max-width: 749px) {
+    .category-list__description,
+    .category-list__thumb {
+      display: none;
+    }
+
+    .category-list__arrow {
+      flex-basis: 2.75rem;
+      block-size: 2.75rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.category_list",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "category",
+      "name": "t:names.category",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "t:settings.collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:settings.title",
+          "info": "t:info.category_title"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "t:settings.description"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.image",
+          "info": "t:info.category_image"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.category_list_heading"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "t:text_defaults.category_list_text"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "t:settings.accent_color",
+      "default": "#8A6A3C"
+    },
+    {
+      "type": "color",
+      "id": "media_background",
+      "label": "t:settings.media_background",
+      "default": "#E7E0CE"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.category_list",
+      "category": "t:categories.collections",
+      "blocks": {
+        "category_1": {
+          "type": "category"
+        },
+        "category_2": {
+          "type": "category"
+        },
+        "category_3": {
+          "type": "category"
+        }
+      },
+      "block_order": ["category_1", "category_2", "category_3"]
+    }
+  ]
+}
+{% endschema %}

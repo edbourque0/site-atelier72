@@ -1,0 +1,175 @@
+{% doc %}
+  Style owner for the editorial home page sections (eyebrow, display heading, header row,
+  pill button with arrow chip, media zoom). Render it from every section that uses these classes
+  so the CSS is included wherever they appear.
+
+  @example
+  {% render 'editorial-styles' %}
+{% enddoc %}
+
+{% stylesheet %}
+  .editorial {
+    --editorial-radius: 0.375rem;
+    --editorial-gap: clamp(1.25rem, 3vw, 2.75rem);
+
+    min-width: 0;
+  }
+
+  .editorial-eyebrow {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--editorial-accent, var(--color-foreground));
+  }
+
+  .editorial-heading {
+    margin: 0;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+
+  .editorial-heading em {
+    font-style: normal;
+  }
+
+  .editorial-text {
+    margin: 0;
+    max-width: 35rem;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
+  }
+
+  .editorial-text > :first-child {
+    margin-block-start: 0;
+  }
+
+  .editorial-text > :last-child {
+    margin-block-end: 0;
+  }
+
+  .editorial-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--gap-xl);
+    margin-block-end: var(--editorial-gap);
+  }
+
+  .editorial-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+    min-width: 0;
+  }
+
+  .editorial-button.button,
+  .editorial-button.button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-md);
+    min-height: 3.625rem;
+    padding-block: 0.4375rem;
+    padding-inline: 1.75rem 0.4375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .editorial-button--plain.button,
+  .editorial-button--plain.button-secondary {
+    justify-content: center;
+    padding-inline: 1.75rem;
+  }
+
+  .editorial-button__chip {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    border-radius: 50%;
+    background-color: var(--button-color);
+    color: var(--button-background-color);
+    transition: transform var(--animation-speed) var(--animation-easing);
+  }
+
+  .editorial-button__chip svg {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+  }
+
+  .editorial-button__chip svg:dir(rtl) {
+    transform: scaleX(-1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .editorial-button:hover .editorial-button__chip {
+      transform: translateX(0.25rem);
+    }
+
+    .editorial-button:dir(rtl):hover .editorial-button__chip {
+      transform: translateX(-0.25rem);
+    }
+  }
+
+  .button.editorial-button--light {
+    --button-background-color: var(--palette-lightest);
+    --button-color: var(--palette-darkest);
+    --button-border-color: var(--palette-lightest);
+    --button-focus-outline-color: var(--palette-lightest);
+  }
+
+  .button.editorial-button--light:hover {
+    --button-background-color: var(--color-white);
+    --button-color: var(--palette-darkest);
+    --button-border-color: var(--color-white);
+  }
+
+  .button.editorial-button--outline {
+    --button-background-color: transparent;
+    --button-color: var(--color-foreground);
+    --button-border-color: var(--color-foreground);
+    --button-border-width: 1px;
+    --button-focus-outline-color: var(--color-foreground);
+  }
+
+  .button.editorial-button--outline:hover {
+    --button-background-color: var(--color-foreground);
+    --button-color: var(--color-background);
+    --button-border-color: var(--color-foreground);
+  }
+
+  .editorial-media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--editorial-radius);
+    background-color: var(--editorial-media-background, rgb(var(--color-foreground-rgb) / var(--opacity-8)));
+  }
+
+  .editorial-media :is(img, svg) {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .editorial-media img {
+      transition: transform 1.2s var(--ease-out-cubic);
+    }
+
+    :is(a, .editorial-media-hover):hover .editorial-media img,
+    a.editorial-media:hover img {
+      transform: scale(1.035);
+    }
+  }
+{% endstylesheet %}

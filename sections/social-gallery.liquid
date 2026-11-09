@@ -1,0 +1,263 @@
+{% comment %}
+  Section contract.
+  Social photo strip: a row of portrait images (Image blocks) followed by a caption line and
+  text links to the shop's social profiles.
+  @example
+  <!-- Home page Instagram strip before the newsletter -->
+{% endcomment %}
+
+{% render 'editorial-styles' %}
+
+{% liquid
+  assign has_background = false
+  if section.settings.background_color != blank and section.settings.background_color.alpha != 0
+    assign has_background = true
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
+<div
+  class="section section--page-width spacing-style{% if has_background %} color-custom-{{ section.id }}{% endif %}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="editorial social-gallery">
+    {%- if section.blocks.size > 0 -%}
+      <ul class="social-gallery__grid" role="list">
+        {%- for block in section.blocks -%}
+          <li class="social-gallery__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {%- liquid
+                assign link = block.settings.link | default: section.settings.primary_url
+                assign alt = block.settings.image.alt | escape
+              -%}
+              {%- if link != blank -%}
+                <a class="social-gallery__media editorial-media" href="{{ link }}" target="_blank" rel="noopener">
+                  {{
+                    block.settings.image
+                    | image_url: width: 800
+                    | image_tag: widths: '240, 360, 480, 640, 800', sizes: '(min-width: 1001px) 20vw, 50vw', loading: 'lazy', alt: alt
+                  }}
+                </a>
+              {%- else -%}
+                <span class="social-gallery__media editorial-media">
+                  {{
+                    block.settings.image
+                    | image_url: width: 800
+                    | image_tag: widths: '240, 360, 480, 640, 800', sizes: '(min-width: 1001px) 20vw, 50vw', loading: 'lazy', alt: alt
+                  }}
+                </span>
+              {%- endif -%}
+            {%- elsif request.design_mode -%}
+              <span class="social-gallery__media editorial-media">
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'social-gallery__placeholder' }}
+              </span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <div class="social-gallery__footer">
+      {%- if section.settings.caption != blank -%}
+        <p class="social-gallery__caption">{{ section.settings.caption }}</p>
+      {%- endif -%}
+      {%- if section.settings.primary_url != blank or section.settings.secondary_url != blank -%}
+        <ul class="social-gallery__links" role="list">
+          {%- if section.settings.primary_url != blank and section.settings.primary_label != blank -%}
+            <li>
+              <a href="{{ section.settings.primary_url }}" target="_blank" rel="noopener">
+                {{- section.settings.primary_label | escape -}}
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.secondary_url != blank and section.settings.secondary_label != blank -%}
+            <li>
+              <a href="{{ section.settings.secondary_url }}" target="_blank" rel="noopener">
+                {{- section.settings.secondary_label | escape -}}
+              </a>
+            </li>
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .social-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
+    gap: 0.625rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .social-gallery__item:empty {
+    display: none;
+  }
+
+  .social-gallery__media {
+    aspect-ratio: 4 / 5;
+  }
+
+  .social-gallery__placeholder {
+    fill: rgb(var(--color-foreground-rgb) / var(--opacity-30));
+  }
+
+  .social-gallery__footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+    margin-block-start: 1.75rem;
+  }
+
+  .social-gallery__caption {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(1.75rem, 3vw, 2.625rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+
+  .social-gallery__caption em {
+    font-style: normal;
+  }
+
+  .social-gallery__links {
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .social-gallery__links a {
+    display: inline-block;
+    padding-block: 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.social_gallery",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:names.image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:settings.link",
+          "info": "t:info.social_gallery_image_link"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "caption",
+      "label": "t:settings.caption",
+      "default": "t:text_defaults.social_gallery_caption"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "t:settings.first_link_label",
+      "default": "Instagram"
+    },
+    {
+      "type": "url",
+      "id": "primary_url",
+      "label": "t:settings.first_link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "t:settings.second_link_label",
+      "default": "TikTok"
+    },
+    {
+      "type": "url",
+      "id": "secondary_url",
+      "label": "t:settings.second_link"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.social_gallery",
+      "category": "t:categories.storytelling",
+      "blocks": {
+        "image_1": {
+          "type": "image"
+        },
+        "image_2": {
+          "type": "image"
+        },
+        "image_3": {
+          "type": "image"
+        },
+        "image_4": {
+          "type": "image"
+        },
+        "image_5": {
+          "type": "image"
+        }
+      },
+      "block_order": ["image_1", "image_2", "image_3", "image_4", "image_5"]
+    }
+  ]
+}
+{% endschema %}

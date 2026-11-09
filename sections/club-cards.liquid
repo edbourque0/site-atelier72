@@ -1,0 +1,319 @@
+{% comment %}
+  Section contract.
+  Community card grid: a header with an eyebrow, heading and button, then tall cards (Card blocks)
+  with an image or solid color, a tag, a large title and a caption.
+  @example
+  <!-- Home page "Le club Atelier72" on the green background -->
+{% endcomment %}
+
+{% render 'editorial-styles' %}
+
+{% liquid
+  assign has_background = false
+  if section.settings.background_color != blank and section.settings.background_color.alpha != 0
+    assign has_background = true
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
+<div
+  class="section section--page-width spacing-style{% if has_background %} color-custom-{{ section.id }}{% endif %}"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --editorial-accent: {{ section.settings.accent_color }};
+  "
+>
+  <div class="editorial club-cards">
+    <div class="editorial-header">
+      <div class="editorial-stack">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="editorial-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="editorial-heading h2">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+      {% render 'editorial-button',
+        label: section.settings.button_label,
+        link: section.settings.button_link,
+        style: section.settings.button_style,
+        new_tab: section.settings.open_in_new_tab
+      %}
+    </div>
+
+    <ul class="club-cards__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign tag_name = 'div'
+          if block.settings.link != blank
+            assign tag_name = 'a'
+          endif
+        -%}
+        <li class="club-cards__item" {{ block.shopify_attributes }}>
+          <{{ tag_name }}
+            class="club-cards__card"
+            {% if block.settings.link != blank %}
+              href="{{ block.settings.link }}"
+              {% if section.settings.open_in_new_tab %}
+                target="_blank" rel="noopener"
+              {% endif %}
+            {% endif %}
+          >
+            <span
+              class="club-cards__media editorial-media"
+              style="--editorial-media-background: {{ block.settings.background_color }};"
+            >
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 1200
+                  | image_tag:
+                    widths: '320, 480, 640, 800, 1000, 1200',
+                    sizes: '(min-width: 1001px) 33vw, (min-width: 641px) 50vw, 100vw',
+                    loading: 'lazy',
+                    alt: ''
+                }}
+                <span class="club-cards__shade" aria-hidden="true"></span>
+              {%- endif -%}
+              {%- if block.settings.tag != blank -%}
+                <span class="club-cards__tag">{{ block.settings.tag | escape }}</span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <span class="club-cards__title">{{ block.settings.title | escape }}</span>
+              {%- endif -%}
+            </span>
+            {%- if block.settings.text != blank -%}
+              <span class="club-cards__text">{{ block.settings.text | escape }}</span>
+            {%- endif -%}
+          </{{ tag_name }}>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+  .club-cards__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .club-cards__card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .club-cards__media {
+    aspect-ratio: 4 / 5;
+    color: var(--palette-lightest);
+  }
+
+  .club-cards__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(var(--palette-darkest-rgb) / var(--opacity-60)), transparent 55%);
+  }
+
+  .club-cards__tag {
+    position: absolute;
+    inset-block-start: 1.125rem;
+    inset-inline-start: 1.125rem;
+    padding: 0.375rem 0.625rem;
+    border: 1px solid rgb(var(--palette-lightest-rgb) / var(--opacity-60));
+    border-radius: var(--style-border-radius-pills);
+    font-size: 0.625rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .club-cards__title {
+    position: absolute;
+    inset-inline: 1.375rem;
+    inset-block-end: 1.25rem;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(2.75rem, 4vw, 4rem);
+    line-height: 0.92;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .club-cards__text {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
+  }
+
+  .club-cards__card:focus-visible {
+    outline-offset: 0.25rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.club_cards",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "card",
+      "name": "t:names.card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:settings.image"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "t:settings.background_color",
+          "info": "t:info.club_card_background",
+          "default": "{{ settings.color_palette.color2 }}"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "t:settings.tag"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:settings.title",
+          "default": "t:text_defaults.club_card_title"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:settings.text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:settings.link"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:settings.eyebrow",
+      "default": "t:text_defaults.club_cards_eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.club_cards_heading"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:settings.link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "t:settings.button_style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.primary"
+        },
+        {
+          "value": "light",
+          "label": "t:options.light"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.outline"
+        }
+      ],
+      "default": "light"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "t:settings.open_new_tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": true,
+      "default": "{{ settings.color_palette.color1 }}"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "t:settings.accent_color",
+      "default": "#C9B48A"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.club_cards",
+      "category": "t:categories.storytelling",
+      "blocks": {
+        "card_1": {
+          "type": "card"
+        },
+        "card_2": {
+          "type": "card"
+        },
+        "card_3": {
+          "type": "card"
+        }
+      },
+      "block_order": ["card_1", "card_2", "card_3"]
+    }
+  ]
+}
+{% endschema %}

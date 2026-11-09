@@ -1,0 +1,140 @@
+{% comment %}
+  Section contract.
+  Newsletter band: a large heading and short text beside the theme's email signup block, which
+  keeps its own form, success and error handling.
+  @example
+  <!-- Home page "Rejoins le club" on the sand background -->
+{% endcomment %}
+
+{% render 'editorial-styles' %}
+
+{% liquid
+  assign has_background = false
+  if section.settings.background_color != blank and section.settings.background_color.alpha != 0
+    assign has_background = true
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
+<div
+  class="section section--page-width spacing-style{% if has_background %} color-custom-{{ section.id }}{% endif %}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="editorial newsletter-band">
+    <div class="newsletter-band__text editorial-stack">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="editorial-heading h2">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="editorial-text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+    </div>
+    <div class="newsletter-band__form">
+      {% content_for 'block', type: 'email-signup', id: 'newsletter-form' %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .newsletter-band {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2.5rem;
+    max-width: 77.5rem;
+    margin-inline: auto;
+    inline-size: 100%;
+  }
+
+  .newsletter-band__text {
+    flex: 1 1 20rem;
+    max-width: 35rem;
+  }
+
+  .newsletter-band__form {
+    flex: 1 1 26rem;
+    max-width: 33.75rem;
+    min-width: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.newsletter_band",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "blocks": [
+    {
+      "type": "email-signup"
+    }
+  ],
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.newsletter_band_heading"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "t:text_defaults.newsletter_band_text"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": true,
+      "default": "#C9B48A"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.newsletter_band",
+      "category": "t:categories.forms",
+      "blocks": {
+        "newsletter-form": {
+          "type": "email-signup",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "integrated_button": true,
+            "input_style": "custom",
+            "input_background_color": "{{ settings.color_palette.background }}",
+            "border_style": "none"
+          }
+        }
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,265 @@
+{% comment %}
+  Section contract.
+  Wide lifestyle image with a bordered content card overlapping its edge. The card holds an
+  eyebrow, a heading and numbered points (Point blocks).
+  @example
+  <!-- Home page "Pensé pour le parcours" -->
+{% endcomment %}
+
+{% render 'editorial-styles' %}
+
+{% liquid
+  assign has_background = false
+  if section.settings.background_color != blank and section.settings.background_color.alpha != 0
+    assign has_background = true
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
+<div
+  class="section section--page-width spacing-style{% if has_background %} color-custom-{{ section.id }}{% endif %}"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --editorial-accent: {{ section.settings.accent_color }};
+    --editorial-media-background: {{ section.settings.media_background }};
+  "
+>
+  <div class="editorial overlap-feature">
+    <div class="overlap-feature__media editorial-media">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 2000
+          | image_tag:
+            widths: '600, 900, 1200, 1600, 2000',
+            sizes: '(min-width: 1001px) 60vw, 100vw',
+            loading: 'lazy'
+        }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'overlap-feature__placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="overlap-feature__card editorial-stack">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="editorial-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="editorial-heading h3">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <ol class="overlap-feature__points" role="list">
+          {%- for block in section.blocks -%}
+            <li class="overlap-feature__point" {{ block.shopify_attributes }}>
+              <span class="overlap-feature__number" aria-hidden="true">
+                {{- forloop.index | prepend: '0' | slice: -2, 2 -}}
+              </span>
+              <div class="overlap-feature__point-text">
+                {%- if block.settings.title != blank -%}
+                  <strong>{{ block.settings.title | escape }}</strong>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <span>{{ block.settings.text | escape }}</span>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ol>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .overlap-feature {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .overlap-feature__media {
+    flex: 1 1 47.5rem;
+    min-height: clamp(22rem, 45vw, 38.75rem);
+  }
+
+  .overlap-feature__placeholder {
+    fill: rgb(var(--color-foreground-rgb) / var(--opacity-30));
+  }
+
+  .overlap-feature__card {
+    position: relative;
+    flex: 1 1 25rem;
+    max-width: 32.5rem;
+    margin-inline-start: -7.5rem;
+    padding: clamp(1.75rem, 4vw, 3.25rem);
+    gap: 1.375rem;
+    border: 1px solid var(--color-foreground);
+    border-radius: var(--editorial-radius);
+    background-color: var(--color-background);
+  }
+
+  .overlap-feature__points {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .overlap-feature__point {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+    padding-block-start: 1.125rem;
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-15));
+  }
+
+  .overlap-feature__number {
+    font-family: var(--font-accent--family);
+    font-weight: var(--font-accent--weight);
+    font-size: 1.875rem;
+    line-height: 1;
+    color: var(--color-primary-button-background);
+  }
+
+  .overlap-feature__point-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .overlap-feature__point-text strong {
+    font-weight: 600;
+  }
+
+  .overlap-feature__point-text span {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
+  }
+
+  @media (max-width: 1000px) {
+    .overlap-feature__card {
+      max-width: none;
+      margin-block-start: -5rem;
+      margin-inline: 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.overlap_feature",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "point",
+      "name": "t:names.feature_point",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:settings.title",
+          "default": "t:text_defaults.feature_point_title"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:settings.text",
+          "default": "t:text_defaults.feature_point_text"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:settings.eyebrow",
+      "default": "t:text_defaults.overlap_feature_eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.overlap_feature_heading"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "t:settings.accent_color",
+      "default": "#8A6A3C"
+    },
+    {
+      "type": "color",
+      "id": "media_background",
+      "label": "t:settings.media_background",
+      "default": "{{ settings.color_palette.color1 }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 128
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 128
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.overlap_feature",
+      "category": "t:categories.storytelling",
+      "blocks": {
+        "point_1": {
+          "type": "point"
+        },
+        "point_2": {
+          "type": "point"
+        },
+        "point_3": {
+          "type": "point"
+        }
+      },
+      "block_order": ["point_1", "point_2", "point_3"]
+    }
+  ]
+}
+{% endschema %}

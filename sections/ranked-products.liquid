@@ -1,0 +1,410 @@
+{% comment %}
+  Section contract.
+  Ranked product grid: shows the first products of a collection in its own sort order, each with
+  its rank number. The first product can be featured across two columns and two rows.
+  @example
+  <!-- Home page "Best sellers": pick a collection sorted by best selling in the admin -->
+{% endcomment %}
+
+{% render 'editorial-styles' %}
+
+{% liquid
+  assign collection = section.settings.collection
+  assign max_products = section.settings.max_products
+  assign has_background = false
+  if section.settings.background_color != blank and section.settings.background_color.alpha != 0
+    assign has_background = true
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
+<div
+  class="section section--page-width spacing-style{% if has_background %} color-custom-{{ section.id }}{% endif %}"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --editorial-accent: {{ section.settings.accent_color }};
+    --editorial-media-background: {{ section.settings.media_background }};
+  "
+>
+  <div class="editorial ranked-products">
+    {%- if section.settings.eyebrow != blank
+      or section.settings.heading != blank
+      or section.settings.button_label != blank
+    -%}
+      <div class="editorial-header">
+        <div class="editorial-stack">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="editorial-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="editorial-heading h2">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+        </div>
+        {%- liquid
+          assign button_link = section.settings.button_link
+          if button_link == blank and collection != blank
+            assign button_link = collection.url
+          endif
+          render 'editorial-button', label: section.settings.button_label, link: button_link, style: section.settings.button_style
+        -%}
+      </div>
+    {%- endif -%}
+
+    <ol
+      class="ranked-products__grid{% if section.settings.feature_first %} ranked-products__grid--featured{% endif %}"
+      role="list"
+    >
+      {%- if collection != blank and collection.products_count > 0 -%}
+        {%- for product in collection.products limit: max_products -%}
+          {%- liquid
+            assign featured = false
+            if forloop.first and section.settings.feature_first
+              assign featured = true
+            endif
+            if featured
+              assign sizes = '(min-width: 1001px) 50vw, 100vw'
+            else
+              assign sizes = '(min-width: 1001px) 25vw, (min-width: 641px) 50vw, 100vw'
+            endif
+            assign variant = product.selected_or_first_available_variant
+          -%}
+          <li class="ranked-products__item{% if featured %} ranked-products__item--featured{% endif %}">
+            <a
+              class="ranked-products__media editorial-media"
+              href="{{ product.url }}"
+              tabindex="-1"
+              aria-hidden="true"
+            >
+              {%- if product.featured_media -%}
+                {{
+                  product.featured_media
+                  | image_url: width: 1600
+                  | image_tag:
+                    widths: '320, 480, 640, 800, 1000, 1200, 1600',
+                    sizes: sizes,
+                    loading: 'lazy',
+                    alt: ''
+                }}
+              {%- else -%}
+                {{ 'product-apparel-1' | placeholder_svg_tag: 'ranked-products__placeholder' }}
+              {%- endif -%}
+              <span class="ranked-products__rank">#{{ forloop.index }}</span>
+              {%- if product.available == false -%}
+                <span class="ranked-products__badge">{{ 'content.product_badge_sold_out' | t }}</span>
+              {%- elsif variant.compare_at_price > variant.price -%}
+                <span class="ranked-products__badge">{{ 'content.product_badge_sale' | t }}</span>
+              {%- endif -%}
+            </a>
+            <div class="ranked-products__info">
+              <div class="ranked-products__titles">
+                <a class="ranked-products__title" href="{{ product.url }}">{{ product.title | escape }}</a>
+                {%- liquid
+                  case section.settings.subtitle
+                    when 'product_type'
+                      assign subtitle = product.type
+                    when 'vendor'
+                      assign subtitle = product.vendor
+                    else
+                      assign subtitle = blank
+                  endcase
+                -%}
+                {%- if subtitle != blank -%}
+                  <span class="ranked-products__subtitle">{{ subtitle | escape }}</span>
+                {%- endif -%}
+              </div>
+              <div class="ranked-products__price">
+                {% render 'price', product_resource: product, show_sale_price_first: true %}
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      {%- elsif request.design_mode -%}
+        {%- for i in (1..max_products) -%}
+          <li class="ranked-products__item{% if forloop.first and section.settings.feature_first %} ranked-products__item--featured{% endif %}">
+            <span class="ranked-products__media editorial-media">
+              {{ 'product-apparel-1' | placeholder_svg_tag: 'ranked-products__placeholder' }}
+              <span class="ranked-products__rank">#{{ forloop.index }}</span>
+            </span>
+            <div class="ranked-products__info">
+              <span class="ranked-products__title">{{ 'placeholders.product_title' | t }}</span>
+            </div>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ol>
+  </div>
+</div>
+
+{% stylesheet %}
+  .ranked-products__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ranked-products__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    min-width: 0;
+  }
+
+  .ranked-products__media {
+    aspect-ratio: 4 / 5;
+  }
+
+  .ranked-products__placeholder {
+    fill: rgb(var(--color-foreground-rgb) / var(--opacity-30));
+  }
+
+  .ranked-products__rank {
+    position: absolute;
+    inset-block-start: 0.875rem;
+    inset-inline-start: 1.125rem;
+    font-family: var(--font-accent--family);
+    font-weight: var(--font-accent--weight);
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--color-foreground);
+  }
+
+  .ranked-products__item--featured .ranked-products__rank {
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    color: var(--color-primary-button-background);
+  }
+
+  .ranked-products__badge {
+    position: absolute;
+    inset-block-start: 1.125rem;
+    inset-inline-end: 1.125rem;
+    padding: 0.4375rem 0.625rem;
+    border-radius: var(--style-border-radius-pills);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-size: 0.625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .ranked-products__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .ranked-products__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  .ranked-products__title {
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: 1.1875rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .ranked-products__item--featured .ranked-products__title {
+    font-size: clamp(1.375rem, 2vw, 1.75rem);
+  }
+
+  .ranked-products__subtitle {
+    font-size: 0.8125rem;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .ranked-products__price {
+    flex: 0 0 auto;
+    text-align: end;
+  }
+
+  @media (min-width: 641px) {
+    .ranked-products__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ranked-products__grid--featured .ranked-products__item--featured {
+      grid-column: span 2;
+    }
+  }
+
+  @media (min-width: 1001px) {
+    .ranked-products__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .ranked-products__grid--featured .ranked-products__item--featured {
+      grid-row: span 2;
+    }
+
+    .ranked-products__grid--featured .ranked-products__item--featured .ranked-products__media {
+      flex: 1;
+      aspect-ratio: auto;
+      min-height: 30rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.ranked_products",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:settings.collection",
+      "info": "t:info.ranked_products_collection"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "t:settings.product_count",
+      "min": 2,
+      "max": 9,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "feature_first",
+      "label": "t:settings.feature_first_product",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "subtitle",
+      "label": "t:settings.product_subtitle",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "product_type",
+          "label": "t:options.product_type"
+        },
+        {
+          "value": "vendor",
+          "label": "t:options.vendor"
+        }
+      ],
+      "default": "product_type"
+    },
+    {
+      "type": "header",
+      "content": "t:content.heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:settings.eyebrow",
+      "default": "t:text_defaults.ranked_products_eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.ranked_products_heading"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.label",
+      "default": "t:text_defaults.ranked_products_button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:settings.link",
+      "info": "t:info.ranked_products_button_link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "t:settings.button_style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "t:options.primary"
+        },
+        {
+          "value": "light",
+          "label": "t:options.light"
+        },
+        {
+          "value": "outline",
+          "label": "t:options.outline"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "t:settings.accent_color",
+      "default": "#8A6A3C"
+    },
+    {
+      "type": "color",
+      "id": "media_background",
+      "label": "t:settings.media_background",
+      "default": "#E7E0CE"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.ranked_products",
+      "category": "t:categories.products"
+    }
+  ]
+}
+{% endschema %}

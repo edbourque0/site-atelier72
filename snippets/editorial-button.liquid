@@ -1,0 +1,39 @@
+{% doc %}
+  Renders the editorial pill button: an uppercase link with an optional round arrow chip.
+  Styles come from `editorial-styles`, which the calling section renders.
+  Nothing renders when the label or link is blank.
+
+  @param {string} label - Visible button text (merchant content, escaped here).
+  @param {string} link - Destination URL.
+  @param {string} [style] - One of 'primary' (default), 'light' or 'outline'.
+  @param {boolean} [show_arrow] - Whether to show the round arrow chip. Defaults to true.
+  @param {boolean} [new_tab] - Opens the link in a new tab when true.
+
+  @example
+  {% render 'editorial-button',
+    label: section.settings.button_label,
+    link: section.settings.button_link,
+    style: section.settings.button_style
+  %}
+{% enddoc %}
+
+{%- liquid
+  assign style = style | default: 'primary'
+  assign show_arrow = show_arrow | default: true, allow_false: true
+  assign new_tab = new_tab | default: false, allow_false: true
+-%}
+
+{%- if label != blank and link != blank -%}
+  <a
+    href="{{ link }}"
+    class="button editorial-button editorial-button--{{ style }}{% unless show_arrow %} editorial-button--plain{% endunless %}"
+    {% if new_tab %}
+      target="_blank" rel="noopener"
+    {% endif %}
+  >
+    <span>{{ label | escape }}</span>
+    {%- if show_arrow -%}
+      <span class="editorial-button__chip" aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+    {%- endif -%}
+  </a>
+{%- endif -%}
