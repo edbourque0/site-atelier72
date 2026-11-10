@@ -435,7 +435,7 @@
       "type": "newsletter-band",
       "settings": {
         "heading": "Rejoins <em>le club.</em>",
-        "text": "Nouveaux coloris, réassorts, concours et événements — en premier. Pas de spam.",
+        "text": "Sois le premier à voir nos nouveaux drops, événements et concours. Pas de spam.",
         "button_label": "S'inscrire",
         "background_color": "{{ settings.color_palette.color1 }}",
         "padding-block-start": 100,
