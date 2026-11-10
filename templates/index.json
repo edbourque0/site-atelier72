@@ -1519,10 +1519,9 @@
         "open_in_new_tab": true,
         "background_color": "{{ settings.color_palette.color1 }}",
         "accent_color": "{{ settings.color_palette.color4 }}",
-        "padding-block-start": 120,
-        "padding-block-end": 120
-      },
-      "disabled": true
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
     },
     "newsletter_band": {
       "type": "newsletter-band",
@@ -2011,9 +2010,9 @@
     "editorial_pair",
     "caps_list",
     "overlap_feature",
+    "club_cards",
     "newsletter_band",
     "ranked_products",
-    "club_cards",
     "hero_jVaWmY",
     "section_3gDH4z",
     "section_FHrdf6",
