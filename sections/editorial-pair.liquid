@@ -1,7 +1,8 @@
 {% comment %}
   Section contract.
   Two-up editorial: an optional header, then side-by-side lifestyle cards (stacked on phones). Each
-  Card block holds a large photo, a title, a short line and a text link; the whole photo is a link.
+  Card block holds a large photo or muted looping video, a title, a short line and a text link; the
+  whole media is a link.
   @example
   <!-- Home page: « Le polo qui tient la route. » next to « Le détail qui fait la différence. » -->
 {% endcomment %}
@@ -41,7 +42,15 @@
         -%}
         <article class="editorial-pair__card" aria-labelledby="{{ heading_id }}" {{ block.shopify_attributes }}>
           {%- capture media -%}
-            {%- if block.settings.image != blank -%}
+            {%- if block.settings.video != blank -%}
+              {%- comment -%} Muted loop; the video's preview image shows while it loads and under reduced motion. {%- endcomment -%}
+              {% render 'background-media',
+                background_media: 'video',
+                background_video: block.settings.video,
+                background_video_position: 'cover',
+                section: section
+              %}
+            {%- elsif block.settings.image != blank -%}
               {{
                 block.settings.image
                 | image_url: width: 1600
@@ -195,6 +204,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:settings.image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "t:settings.video",
+          "info": "t:info.editorial_card_video"
         },
         {
           "type": "text",

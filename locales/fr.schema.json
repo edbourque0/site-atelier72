@@ -1205,7 +1205,7 @@
     "anchor_id": "Les liens se terminant par #id-ancre défilent jusqu’à cette section",
     "category_image": "Par défaut, l'image de la collection",
     "category_title": "Par défaut, le titre de la collection",
-    "point_label": "Court mot affiché devant le point. Laissez vide pour afficher son numéro",
+    "editorial_card_video": "Remplace l'image. Joue en boucle, sans son",
     "mega_menu_accordion": "Les liens qui ont leurs propres liens deviennent des groupes à ouvrir d'un clic, tous dans une même colonne",
     "club_card_background": "Affiché lorsqu'il n'y a pas d'image",
     "ranked_products_button_link": "Par défaut, la collection",

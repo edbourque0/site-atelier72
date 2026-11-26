@@ -236,7 +236,7 @@
     "anchor_id": "Links ending in #anchor-id scroll to this section",
     "category_image": "Defaults to the collection image",
     "category_title": "Defaults to the collection title",
-    "point_label": "Short word shown before the point. Leave empty to show its number",
+    "editorial_card_video": "Replaces the image. Plays muted on a loop",
     "mega_menu_accordion": "Links that have their own links become click-to-open groups, stacked in one column",
     "club_card_background": "Shown when there is no image",
     "ranked_products_button_link": "Defaults to the collection",

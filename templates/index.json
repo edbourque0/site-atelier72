@@ -569,15 +569,13 @@
         "point_1": {
           "type": "point",
           "settings": {
-            "label": "Tiguidou!",
-            "title": "La classe, sans la cravate",
+            "title": "Chic en masse, cravate pantoute",
             "text": "Le look du club privé, l'attitude du parcours public."
           }
         },
         "point_2": {
           "type": "point",
           "settings": {
-            "label": "Pas d'flafla",
             "title": "Juste l'essentiel",
             "text": "Peu de pièces, mais chacune mérite sa place dans ton sac."
           }
@@ -585,7 +583,6 @@
         "point_3": {
           "type": "point",
           "settings": {
-            "label": "Santé!",
             "title": "Du 1er trou au 19e",
             "text": "Assez confortable pour 18 trous, assez beau pour la terrasse après."
           }
