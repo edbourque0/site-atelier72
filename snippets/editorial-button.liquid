@@ -31,7 +31,10 @@
       target="_blank" rel="noopener"
     {% endif %}
   >
-    <span>{{ label | escape }}</span>
+    <span>
+      {{- label | escape -}}
+      {%- if new_tab %}<span class="visually-hidden"> {{ 'accessibility.new_window' | t }}</span>{% endif -%}
+    </span>
     {%- if show_arrow -%}
       <span class="editorial-button__chip" aria-hidden="true">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
     {%- endif -%}

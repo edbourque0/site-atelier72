@@ -188,13 +188,13 @@
     "disclosures": "Divulgations"
   },
   "settings": {
+    "mega_menu_accordion": "Ouvrir les sous-liens au clic",
     "link_label": "Texte du lien",
     "video_mobile": "Vidéo mobile",
     "drawer_featured_content": "Afficher le contenu vedette dans le menu mobile",
     "menu_hide_empty_collections": "Masquer les liens de menu vers les collections vides",
     "brand_accent_color": "Accent",
     "brand_highlight_color": "Surbrillance",
-    "show_play_toggle": "Afficher le bouton pause",
     "brand_logo_files": "Utiliser les fichiers de logo Atelier72",
     "primary_button_label": "Texte du bouton principal",
     "primary_button_link": "Lien du bouton principal",
@@ -1205,6 +1205,8 @@
     "anchor_id": "Les liens se terminant par #id-ancre défilent jusqu’à cette section",
     "category_image": "Par défaut, l'image de la collection",
     "category_title": "Par défaut, le titre de la collection",
+    "point_label": "Court mot affiché devant le point. Laissez vide pour afficher son numéro",
+    "mega_menu_accordion": "Les liens qui ont leurs propres liens deviennent des groupes à ouvrir d'un clic, tous dans une même colonne",
     "club_card_background": "Affiché lorsqu'il n'y a pas d'image",
     "ranked_products_button_link": "Par défaut, la collection",
     "ranked_products_collection": "Les produits suivent l'ordre de tri de la collection. Triez-la par meilleures ventes pour classer les meilleurs vendeurs.",

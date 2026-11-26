@@ -149,7 +149,7 @@ class BrandHero extends Component {
     if (!video) return;
 
     this.toggleAttribute('data-sound', !video.muted);
-    this.refs.soundToggle?.setAttribute('aria-pressed', String(!video.muted));
+    // The label names the next action ("Unmute" / "Mute"), so no aria-pressed: both would announce state twice.
     const label = video.muted ? this.dataset.labelUnmute : this.dataset.labelMute;
     if (label) this.refs.soundToggle?.setAttribute('aria-label', label);
   }

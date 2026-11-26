@@ -228,6 +228,8 @@
     "anchor_id": "Links ending in #anchor-id scroll to this section",
     "category_image": "Defaults to the collection image",
     "category_title": "Defaults to the collection title",
+    "point_label": "Short word shown before the point. Leave empty to show its number",
+    "mega_menu_accordion": "Links that have their own links become click-to-open groups, stacked in one column",
     "club_card_background": "Shown when there is no image",
     "ranked_products_button_link": "Defaults to the collection",
     "ranked_products_collection": "Products follow the collection's sort order. Sort the collection by best selling to rank best sellers.",
@@ -736,13 +738,13 @@
     "below_media": "Meedia all"
   },
   "settings": {
+    "mega_menu_accordion": "Open nested links on click",
     "link_label": "Link label",
     "video_mobile": "Mobile video",
     "drawer_featured_content": "Show featured content in mobile menu",
     "menu_hide_empty_collections": "Hide menu links to empty collections",
     "brand_accent_color": "Accent",
     "brand_highlight_color": "Highlight",
-    "show_play_toggle": "Show pause button",
     "brand_logo_files": "Use Atelier72 logo files",
     "primary_button_label": "Primary button label",
     "primary_button_link": "Primary button link",

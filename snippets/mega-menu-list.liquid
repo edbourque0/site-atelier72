@@ -10,6 +10,7 @@
   @param {number} [content_aspect_ratio] - Aspect ratio for content images.
   @param {number} [image_border_radius] - Border radius for content images.
   @param {object} [section] - The section object.
+  @param {boolean} [collapse_nested] - Stack the links in one column and show links with children as click-to-open groups. Ignored for 'collection_images'.
 
   @example
   {% render 'mega-menu-list', parent_link: link, id: 'MegaMenuList-1', grid_columns_count: 6, menu_content_type: 'featured_products' %}
@@ -58,6 +59,11 @@
     endif
   endif
 
+  # Groups need a plain list of links, so collection image cards keep their own layout.
+  if menu_content_type == 'collection_images'
+    assign collapse_nested = false
+  endif
+
   if menu_content_type == 'featured_collections'
     if parent_link.type == 'collection_link'
       assign collection_handles = parent_link.object.handle | append: ','
@@ -88,17 +94,23 @@
   {% for link in parent_link.links %}
     {%- if link.object.products_count == empty_collection_count -%}{%- continue -%}{%- endif -%}
     {% liquid
+      # Collapsed groups hide their children, so they take no extra column room.
+      assign nested_links_size = link.links.size
+      if collapse_nested
+        assign nested_links_size = 0
+      endif
+
       # Decide whether to open a column span, and how many columns of the grid to span
       if forloop.first or open_column_span == false
         assign open_column_span = true
 
         # Don't allow orphan links in a column
-        assign break_after_modulo = link.links.size | modulo: links_before_wrap
+        assign break_after_modulo = nested_links_size | modulo: links_before_wrap
         if break_after_modulo == 1
           assign links_before_wrap = links_before_wrap | minus: 1
         endif
         assign break_after_float = links_before_wrap | times: 1.0
-        assign column_span = link.links.size | divided_by: break_after_float | ceil | at_least: 1
+        assign column_span = nested_links_size | divided_by: break_after_float | ceil | at_least: 1
         assign column_count = column_count | plus: column_span
         assign should_break_columns = true
         assign span_class = ''
@@ -117,9 +129,39 @@
       endif
     %}
     <div>
+      {%- if collapse_nested and link.links != blank -%}
+        <details class="mega-menu__group" name="{{ id }}-groups">
+          <summary class="mega-menu__link mega-menu__link--parent mega-menu__group-toggle">
+            <span class="wrap-text">{{- link.title -}}</span>
+            <svg
+              class="mega-menu__group-icon"
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 10 6"
+            >
+              {%- render 'icon', icon: 'caret' -%}
+            </svg>
+          </summary>
+          <ul class="list-unstyled mega-menu__group-list">
+            <li>
+              <a href="{{ link.url }}" class="mega-menu__link">
+                <span class="wrap-text">{{- 'actions.view_all' | t -}}</span>
+              </a>
+            </li>
+            {%- for childLink in link.links -%}
+              {%- if childLink.object.products_count == empty_collection_count -%}{%- continue -%}{%- endif -%}
+              <li>
+                <a href="{{ childLink.url }}" class="mega-menu__link">
+                  <span class="wrap-text">{{- childLink.title -}}</span>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </details>
+      {%- else -%}
       <a
         href="{{ link.url }}"
-        class="mega-menu__link {% if link.links != blank %}mega-menu__link--parent{% endif %}"
+        class="mega-menu__link {% if link.links != blank or collapse_nested %}mega-menu__link--parent{% endif %}"
       >
         {% if menu_content_type == 'collection_images' %}
           {%- capture collection_image_sizes -%}
@@ -170,6 +212,7 @@
           {% endfor %}
         </ul>
       {% endif %}
+      {%- endif -%}
     </div>
 
     {% liquid
@@ -180,6 +223,8 @@
         assign open_column_span = false
       elsif menu_content_type == 'collection_images'
         assign open_column_span = false
+      elsif collapse_nested
+        # Groups and plain links share one column.
       elsif next_linklist.links != blank
         assign open_column_span = false
       elsif link.links != blank and next_linklist.links == blank

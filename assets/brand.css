@@ -105,8 +105,10 @@ p:not(.h1, .h2, .h3, .h4, .h5, .h6) a:where(:not(.button, .button-secondary, .bu
   transform: translateY(1px);
 }
 
-/* Header: horizontal lockup sits 28–36px tall. */
-.header-logo__brand {
+/* Header: horizontal lockup sits 28–36px tall. Two classes so this beats the logo block's own
+   `.header-logo__image` sizing, which loads later (compiled block CSS) and reads size variables that
+   only uploaded logos set. Without it the viewBox-only SVG collapses to 0px wide. */
+.header-logo__image.header-logo__brand {
   display: block;
   block-size: clamp(1.75rem, 2.6vw, 2.25rem);
   inline-size: auto;

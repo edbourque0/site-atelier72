@@ -113,6 +113,9 @@
             {%- if block.settings.text != blank -%}
               <span class="club-cards__text">{{ block.settings.text | escape }}</span>
             {%- endif -%}
+            {%- if block.settings.link != blank and section.settings.open_in_new_tab -%}
+              <span class="visually-hidden"> {{ 'accessibility.new_window' | t }}</span>
+            {%- endif -%}
           </{{ tag_name }}>
         </li>
       {%- endfor -%}

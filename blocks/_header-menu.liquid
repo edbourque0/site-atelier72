@@ -179,7 +179,8 @@
                       grid_columns_count_collection_images: 8,
                       menu_content_type: menu_content_type,
                       content_aspect_ratio: ratio,
-                      image_border_radius: image_border_radius
+                      image_border_radius: image_border_radius,
+                      collapse_nested: block_settings.mega_menu_accordion
                     %}
                   </div>
                 </div>
@@ -681,6 +682,41 @@
     }
   }
 
+  /* Click-to-open link groups ("Open nested links on click") */
+  .mega-menu__group-toggle {
+    align-items: center;
+    gap: var(--gap-sm);
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  .mega-menu__group-icon {
+    flex: none;
+    width: var(--font-size--3xs);
+    aspect-ratio: 10 / 6;
+    fill: currentColor;
+    transition: transform var(--animation-speed) var(--animation-easing);
+  }
+
+  .mega-menu__group[open] .mega-menu__group-icon {
+    transform: rotate(180deg);
+  }
+
+  .mega-menu__group-list {
+    padding-inline-start: var(--padding-md);
+    padding-block-end: var(--padding-xs);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mega-menu__group-icon {
+      transition: none;
+    }
+  }
+
   @media screen and (max-width: 989px) {
     .mega-menu__content-list-item--hidden-tablet {
       display: none;
@@ -1176,6 +1212,14 @@
       "unit": "px",
       "default": 0,
       "visible_if": "{{ block.settings.menu_style != 'text' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "mega_menu_accordion",
+      "label": "t:settings.mega_menu_accordion",
+      "info": "t:info.mega_menu_accordion",
+      "default": false,
+      "visible_if": "{{ block.settings.menu_style != 'collection_images' }}"
     },
     {
       "type": "header",

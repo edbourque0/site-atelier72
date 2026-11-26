@@ -32,7 +32,7 @@
 %}
 
 <div class="section-background{% if has_background %} color-custom-{{ section.id }}{% endif %}"></div>
-<footer
+<div
   class="section section--page-width brand-footer{% if has_background %} color-custom-{{ section.id }}{% endif %}"
   style="--brand-footer-accent: {{ section.settings.accent_color }};"
 >
@@ -78,13 +78,13 @@
             <p class="brand-footer__heading">{{ section.settings.social_heading | escape }}</p>
             <ul class="brand-footer__links" role="list">
               {%- if section.settings.instagram_url != blank -%}
-                <li><a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">Instagram</a></li>
+                <li><a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">Instagram<span class="visually-hidden"> {{ 'accessibility.new_window' | t }}</span></a></li>
               {%- endif -%}
               {%- if section.settings.tiktok_url != blank -%}
-                <li><a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener">TikTok</a></li>
+                <li><a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener">TikTok<span class="visually-hidden"> {{ 'accessibility.new_window' | t }}</span></a></li>
               {%- endif -%}
               {%- if section.settings.facebook_url != blank -%}
-                <li><a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener">Facebook</a></li>
+                <li><a href="{{ section.settings.facebook_url }}" target="_blank" rel="noopener">Facebook<span class="visually-hidden"> {{ 'accessibility.new_window' | t }}</span></a></li>
               {%- endif -%}
             </ul>
           </div>
@@ -104,7 +104,7 @@
       <p>{{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})</p>
     </div>
   </div>
-</footer>
+</div>
 
 {% stylesheet %}
   .brand-footer {
