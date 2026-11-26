@@ -26,6 +26,10 @@
   .product-badges--top-right {
     top: calc(var(--badge-inset) + var(--padding-block-start));
     inset-inline-end: calc(var(--badge-inset) + var(--padding-inline-end));
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--gap-2xs);
   }
 
   .product-badges__badge {

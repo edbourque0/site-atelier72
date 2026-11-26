@@ -1383,6 +1383,60 @@
           }
         ],
         "default": "none"
+      },
+      {
+        "type": "header",
+        "content": "t:content.promo_badge"
+      },
+      {
+        "type": "checkbox",
+        "id": "promo_badge_enabled",
+        "label": "t:settings.promo_badge_enabled",
+        "info": "t:info.promo_badge_enabled",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "promo_badge_text",
+        "label": "t:settings.promo_badge_text",
+        "default": "Black Friday",
+        "visible_if": "{{ settings.promo_badge_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "promo_badge_tag",
+        "label": "t:settings.promo_badge_tag",
+        "info": "t:info.promo_badge_tag",
+        "default": "black-friday",
+        "visible_if": "{{ settings.promo_badge_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "promo_badge_starts_at",
+        "label": "t:settings.promo_badge_starts_at",
+        "info": "t:info.promo_badge_date",
+        "visible_if": "{{ settings.promo_badge_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "promo_badge_ends_at",
+        "label": "t:settings.promo_badge_ends_at",
+        "info": "t:info.promo_badge_date",
+        "visible_if": "{{ settings.promo_badge_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "promo_badge_background_color",
+        "label": "t:settings.promo_badge_background_color",
+        "default": "#000000",
+        "visible_if": "{{ settings.promo_badge_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "promo_badge_text_color",
+        "label": "t:settings.promo_badge_text_color",
+        "default": "#FFFFFF",
+        "visible_if": "{{ settings.promo_badge_enabled }}"
       }
     ]
   },

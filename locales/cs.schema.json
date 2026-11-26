@@ -188,6 +188,13 @@
     "disclosures": "Prohlášení"
   },
   "settings": {
+    "promo_badge_enabled": "Show promo badge",
+    "promo_badge_text": "Badge text",
+    "promo_badge_tag": "Product tag",
+    "promo_badge_starts_at": "Starts",
+    "promo_badge_ends_at": "Ends",
+    "promo_badge_background_color": "Promo badge background",
+    "promo_badge_text_color": "Promo badge text",
     "mega_menu_accordion": "Open nested links on click",
     "link_label": "Link label",
     "video_mobile": "Mobile video",
@@ -938,6 +945,7 @@
     "direction_top_start": "Vlevo nahoře"
   },
   "content": {
+    "promo_badge": "Promo badge",
     "brand_accents": "Brand accents",
     "video_controls": "Video controls",
     "advanced": "Pokročilé",
@@ -1195,6 +1203,9 @@
     "disclosures": "Prohlášení"
   },
   "info": {
+    "promo_badge_enabled": "Shows on the top right of product cards",
+    "promo_badge_tag": "Products with this tag get the badge",
+    "promo_badge_date": "Optional. Format: 2026-11-26 18:00 -0500",
     "video_mobile": "Optional. A vertical video for phones (749px and narrower). The main video plays on larger screens.",
     "drawer_featured_content": "Turn off to show only links in the mobile menu, without the featured products, collections or link images.",
     "menu_hide_empty_collections": "Menu links to collections with no products available in the online store are hidden in the header, mobile menu and footer.",

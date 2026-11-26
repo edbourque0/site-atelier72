@@ -188,6 +188,13 @@
     "disclosures": "Divulgations"
   },
   "settings": {
+    "promo_badge_enabled": "Afficher le badge promo",
+    "promo_badge_text": "Texte du badge",
+    "promo_badge_tag": "Balise de produit",
+    "promo_badge_starts_at": "Début",
+    "promo_badge_ends_at": "Fin",
+    "promo_badge_background_color": "Arrière-plan du badge promo",
+    "promo_badge_text_color": "Texte du badge promo",
     "mega_menu_accordion": "Ouvrir les sous-liens au clic",
     "link_label": "Texte du lien",
     "video_mobile": "Vidéo mobile",
@@ -938,6 +945,7 @@
     "input_field": "Champ de saisie"
   },
   "content": {
+    "promo_badge": "Badge promo",
     "brand_accents": "Accents de marque",
     "video_controls": "Contrôles vidéo",
     "background_video": "Vidéo de fond",
@@ -1195,6 +1203,9 @@
     "disclosures": "Divulgations"
   },
   "info": {
+    "promo_badge_enabled": "S'affiche en haut à droite des cartes produits",
+    "promo_badge_tag": "Les produits qui ont cette balise reçoivent le badge",
+    "promo_badge_date": "Facultatif. Format : 2026-11-26 18:00 -0500",
     "video_mobile": "Facultatif. Une vidéo verticale pour les téléphones (749 px et moins). La vidéo principale joue sur les écrans plus grands.",
     "drawer_featured_content": "Désactivez pour afficher seulement les liens dans le menu mobile, sans les produits, collections ou images vedettes.",
     "menu_hide_empty_collections": "Les liens de menu vers les collections sans produit disponible dans la boutique en ligne sont masqués dans l'en-tête, le menu mobile et le pied de page.",

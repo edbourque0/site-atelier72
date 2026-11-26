@@ -4,13 +4,55 @@
 
 {% capture children %}
   {% unless product == blank %}
-    {%- if product.available == false or product.compare_at_price > product.price -%}
+    {%- liquid
+      assign has_status_badge = false
+      if product.available == false or product.compare_at_price > product.price
+        assign has_status_badge = true
+      endif
+
+      # Promo badge: products carrying the promo tag, inside the optional start/end window.
+      # Automatic discounts are not visible to Liquid, so the tag mirrors the discount's product list.
+      assign show_promo_badge = false
+      assign promo_tag = settings.promo_badge_tag | strip | downcase
+      if settings.promo_badge_enabled and settings.promo_badge_text != blank and promo_tag != blank
+        assign product_tags = product.tags | join: '|' | downcase | split: '|'
+        if product_tags contains promo_tag
+          assign show_promo_badge = true
+          assign now_seconds = 'now' | date: '%s' | plus: 0
+          if settings.promo_badge_starts_at != blank
+            assign starts_seconds = settings.promo_badge_starts_at | date: '%s' | plus: 0
+            if now_seconds < starts_seconds
+              assign show_promo_badge = false
+            endif
+          endif
+          if settings.promo_badge_ends_at != blank
+            assign ends_seconds = settings.promo_badge_ends_at | date: '%s' | plus: 0
+            if ends_seconds > 0 and now_seconds >= ends_seconds
+              assign show_promo_badge = false
+            endif
+          endif
+        endif
+      endif
+
+      # When status badges also sit top right, the promo badge stacks in their container.
+      assign promo_shares_container = false
+      if show_promo_badge and has_status_badge and settings.badge_position == 'top-right'
+        assign promo_shares_container = true
+      endif
+    -%}
+    {%- capture badges_style -%}
+      --badge-border-radius: {{ settings.badge_corner_radius }}px;
+      --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
+    {%- endcapture -%}
+    {%- capture promo_badge -%}
+      <div class="product-badges__badge product-badges__badge--rectangle color-custom-badge-promo">
+        {{- settings.promo_badge_text | escape -}}
+      </div>
+    {%- endcapture -%}
+    {%- if has_status_badge -%}
       <div
         class="product-badges product-badges--{{ settings.badge_position }}"
-        style="
-            --badge-border-radius: {{ settings.badge_corner_radius }}px;
-            --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
-        "
+        style="{{ badges_style }}"
       >
         <div
           class="
@@ -24,6 +66,14 @@
             {{ 'content.product_badge_sale' | t }}
           {%- endif -%}
         </div>
+        {%- if promo_shares_container -%}
+          {{ promo_badge }}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if show_promo_badge and promo_shares_container == false -%}
+      <div class="product-badges product-badges--top-right" style="{{ badges_style }}">
+        {{ promo_badge }}
       </div>
     {%- endif -%}
     {% if product.available and settings.quick_add or settings.mobile_quick_add %}
