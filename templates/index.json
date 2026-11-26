@@ -60,15 +60,6 @@
     "category_list": {
       "type": "category-list",
       "blocks": {
-        "category_casquettes": {
-          "type": "category",
-          "settings": {
-            "collection": "casquettes",
-            "title": "Casquettes et tuques",
-            "description": "",
-            "image": "shopify://shop_images/lifestyle-tuque-creme.jpg"
-          }
-        },
         "category_vetements": {
           "type": "category",
           "settings": {
@@ -76,6 +67,15 @@
             "title": "",
             "description": "",
             "image": "shopify://shop_images/lifestyle-hoodie-bordeaux-dos.jpg"
+          }
+        },
+        "category_casquettes": {
+          "type": "category",
+          "settings": {
+            "collection": "casquettes",
+            "title": "Casquettes et tuques",
+            "description": "",
+            "image": "shopify://shop_images/lifestyle-tuque-creme.jpg"
           }
         },
         "category_accessoires": {
@@ -534,6 +534,7 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/IMG-7453.jpg",
+            "video": "shopify://files/videos/🚚 Livraison gratuite sur toutes les commandes !Il nous reste quelques items en stock et, pour l(1).mp4",
             "title": "Le polo, du départ au 19e.",
             "text": "Coupe classique, tissu respirant. Aussi bien sur le vert qu'à la terrasse.",
             "link": "shopify://collections/polos",
