@@ -17,13 +17,14 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "Livraison gratuite dès 100 $",
+            "text": "Ajoutez nos produits du Black Friday dans votre panier pour obtenir 25% de rabais",
             "link": "",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
             "weight": "600",
             "letter_spacing": "normal",
-            "case": "none"
+            "case": "none",
+            "text_color": ""
           },
           "blocks": {}
         }
@@ -37,6 +38,7 @@
         "section_width": "page-width",
         "background_color": "{{ settings.color_palette.color1 }}",
         "divider_width": 1,
+        "divider_color": "",
         "padding-block-start": 10,
         "padding-block-end": 10
       }
@@ -59,6 +61,8 @@
           "static": true,
           "settings": {
             "menu": "menu-principal-nouveau-site",
+            "background_color": "{{ settings.color_palette.background }}",
+            "text_color": "",
             "type_font_primary_size": "1rem",
             "menu_font_style": "inverse_large",
             "type_font_primary_link": "body",
@@ -69,10 +73,13 @@
             "image_border_radius": 0,
             "mega_menu_accordion": true,
             "navigation_bar": false,
+            "background_color_navigation_bar": "{{ settings.color_palette.background }}",
+            "text_color_navigation_bar": "",
+            "drawer_featured_content": false,
             "drawer_accordion": true,
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false,
-            "drawer_featured_content": false
+            "drawer_divider_color": ""
           },
           "blocks": {}
         }
@@ -81,6 +88,7 @@
         "logo_position": "center",
         "menu_position": "left",
         "menu_row": "top",
+        "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
@@ -96,14 +104,29 @@
         "enable_sticky_header": "always",
         "divider_width": 0,
         "divider_size": "page-width",
+        "divider_color": "",
         "border_width": 0,
+        "bottom_border_color": "{{ settings.color_palette.color3 }}",
+        "actions_display_style": "icon",
+        "actions_font_size": "0.875rem",
+        "actions_font": "body",
+        "actions_text_case": "none",
         "background_color_top": "{{ settings.color_palette.background }}",
+        "text_color_top": "",
+        "background_color_bottom": "",
+        "text_color_bottom": "",
+        "bubble_style": "default",
+        "bubble_background_color": "",
+        "bubble_text_color": "",
         "enable_transparent_header_home": true,
-        "enable_transparent_header_product": false,
-        "enable_transparent_header_collection": false,
         "home_inverse_logo": true,
         "text_color_transparent_home": "{{ settings.color_palette.color4 }}",
-        "bottom_border_color": "{{ settings.color_palette.color3 }}"
+        "enable_transparent_header_product": false,
+        "product_inverse_logo": false,
+        "text_color_transparent_product": "",
+        "enable_transparent_header_collection": false,
+        "collection_inverse_logo": false,
+        "text_color_transparent_collection": ""
       }
     }
   },
