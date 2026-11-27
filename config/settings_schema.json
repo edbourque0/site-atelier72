@@ -2048,6 +2048,12 @@
         "id": "product_card_carousel",
         "label": "t:settings.product_card_carousel",
         "default": true
+      },
+      {
+        "type": "text",
+        "id": "card_second_image_collections",
+        "label": "t:settings.card_second_image_collections",
+        "info": "t:info.card_second_image_collections"
       }
     ]
   },

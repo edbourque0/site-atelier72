@@ -188,6 +188,7 @@
     "disclosures": "Divulgations"
   },
   "settings": {
+    "card_second_image_collections": "Deuxième image en premier dans les collections",
     "promo_badge_enabled": "Afficher le badge promo",
     "promo_badge_text": "Texte du badge",
     "promo_badge_tag": "Balise de produit",
@@ -1203,6 +1204,7 @@
     "disclosures": "Divulgations"
   },
   "info": {
+    "card_second_image_collections": "Les collections dont l'identifiant contient ce mot, comme « femmes », affichent d'abord la deuxième image de chaque produit. Laisser vide pour désactiver",
     "promo_badge_enabled": "S'affiche en haut à droite des cartes produits",
     "promo_badge_tag": "Les produits qui ont cette balise reçoivent le badge",
     "promo_badge_date": "Facultatif. Format : 2026-11-26 18:00 -0500",

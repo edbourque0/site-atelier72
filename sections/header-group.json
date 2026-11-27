@@ -27,10 +27,25 @@
             "text_color": ""
           },
           "blocks": {}
+        },
+        "announcement_Dlais7": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Black Friday, Cyber Monday et Fêtes : la livraison pourrait prendre quelques jours de plus. Merci de votre patience!",
+            "link": "",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "weight": "600",
+            "letter_spacing": "normal",
+            "case": "none",
+            "text_color": ""
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "announcement_BxgCk9"
+        "announcement_BxgCk9",
+        "announcement_Dlais7"
       ],
       "name": "t:names.announcement_bar",
       "settings": {

@@ -219,6 +219,7 @@
     "work_quickly_to_ship": "<p>Radićemo brzo da bismo poslali vašu porudžbinu što je pre moguće. Kada porudžbina bude poslata, dobićete imejl sa daljim informacijama. Vreme isporuke se razlikuje u zavisnosti od vaše lokacije.</p>"
   },
   "info": {
+    "card_second_image_collections": "Collections whose handle contains this word, like \"femmes\", show each product's second image first. Leave empty to turn off",
     "promo_badge_enabled": "Shows on the top right of product cards",
     "promo_badge_tag": "Products with this tag get the badge",
     "promo_badge_date": "Optional. Format: 2026-11-26 18:00 -0500",
@@ -742,6 +743,7 @@
     "below_media": "Ispod medija"
   },
   "settings": {
+    "card_second_image_collections": "Lead with second image in collections",
     "promo_badge_enabled": "Show promo badge",
     "promo_badge_text": "Badge text",
     "promo_badge_tag": "Product tag",

@@ -48,6 +48,16 @@
     assign image_sizes = sizes_attribute | strip
   endif
 
+  # In collections whose handle contains the merchant's keyword (e.g. "femmes"), the card
+  # leads with the product's second image; the first one moves to second place.
+  assign lead_with_second_media = false
+  assign lead_media = product.featured_media
+  assign second_media_keyword = settings.card_second_image_collections | strip | downcase
+  if second_media_keyword != blank and product.media.size > 1 and collection.handle contains second_media_keyword
+    assign lead_with_second_media = true
+    assign lead_media = product.media | reject: 'src', product.featured_media | first
+  endif
+
   assign ratio = '1'
   case block_settings.image_ratio
     when 'landscape'
@@ -57,7 +67,7 @@
     when 'square'
       assign ratio = '1'
     when 'adapt'
-      assign ratio = product.featured_media.preview_image.aspect_ratio | default: '1'
+      assign ratio = lead_media.preview_image.aspect_ratio | default: '1'
   endcase
 
   if block_settings.image_ratio == 'adapt' and block_settings.constrain_to_viewport
@@ -137,6 +147,13 @@
 
           assign other_media = product.media | reject: 'src', product.featured_media
           assign media_list_to_show = product.featured_media | concat: other_media
+
+          if lead_with_second_media
+            assign first_media = media_list_to_show | slice: 0, 1
+            assign second_media = media_list_to_show | slice: 1, 1
+            assign remaining_media = media_list_to_show | slice: 2, media_list_to_show.size
+            assign media_list_to_show = second_media | concat: first_media | concat: remaining_media
+          endif
 
           # Don't overfetch media if we don't need to
           assign max_visible_slide_count = 1

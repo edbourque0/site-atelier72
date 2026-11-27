@@ -219,6 +219,7 @@
     "work_quickly_to_ship": "<p>கூடிய விரைவில் உங்கள் ஆர்டரை ஷிப்பிங் செய்ய நாங்கள் துரிதமாகச் செயல்படுவோம். உங்கள் ஆர்டர் ஷிப்பிங் செய்யப்பட்டவுடன், மேலதிகத் தகவல்களுடன் உங்களுக்கு ஒரு மின்னஞ்சல் வரும். டெலிவரி நேரங்கள் உங்கள் இருப்பிடத்தைப் பொறுத்து மாறுபடும்.</p>"
   },
   "info": {
+    "card_second_image_collections": "Collections whose handle contains this word, like \"femmes\", show each product's second image first. Leave empty to turn off",
     "promo_badge_enabled": "Shows on the top right of product cards",
     "promo_badge_tag": "Products with this tag get the badge",
     "promo_badge_date": "Optional. Format: 2026-11-26 18:00 -0500",
@@ -742,6 +743,7 @@
     "below_media": "மீடியாவுக்குக் கீழே"
   },
   "settings": {
+    "card_second_image_collections": "Lead with second image in collections",
     "promo_badge_enabled": "Show promo badge",
     "promo_badge_text": "Badge text",
     "promo_badge_tag": "Product tag",

@@ -219,6 +219,7 @@
     "work_quickly_to_ship": "<p>వీలైనంత త్వరగా మీ ఆర్డర్‌ను షిప్ చేయడానికి మేము వేగంగా పని చేస్తాము. మీ ఆర్డర్ షిప్ చేయబడిన తర్వాత, మీరు తదుపరి సమాచారంతో కూడిన ఇమెయిల్‌ను అందుకుంటారు. మీ లొకేషన్‌ను బట్టి డెలివరీ సమయాలు మారుతూ ఉంటాయి.</p>"
   },
   "info": {
+    "card_second_image_collections": "Collections whose handle contains this word, like \"femmes\", show each product's second image first. Leave empty to turn off",
     "promo_badge_enabled": "Shows on the top right of product cards",
     "promo_badge_tag": "Products with this tag get the badge",
     "promo_badge_date": "Optional. Format: 2026-11-26 18:00 -0500",
@@ -742,6 +743,7 @@
     "below_media": "మీడియా దిగువన"
   },
   "settings": {
+    "card_second_image_collections": "Lead with second image in collections",
     "promo_badge_enabled": "Show promo badge",
     "promo_badge_text": "Badge text",
     "promo_badge_tag": "Product tag",
