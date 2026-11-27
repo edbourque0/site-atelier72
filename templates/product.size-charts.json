@@ -484,12 +484,26 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "product_card_swatches": {
+              "type": "swatches",
+              "settings": {
+                "product_swatches_alignment": "flex-start",
+                "product_swatches_alignment_mobile": "flex-start",
+                "hide_padding": false,
+                "product_swatches_padding_top": 4,
+                "product_swatches_padding_bottom": 0,
+                "product_swatches_padding_left": 0,
+                "product_swatches_padding_right": 0
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "product_card_gallery_DNizbJ",
             "product_title_M7MJkb",
-            "price_gLWgA6"
+            "price_gLWgA6",
+            "product_card_swatches"
           ]
         }
       },
